@@ -1,10 +1,40 @@
-import React from 'react'
-import { View, Text, KeyboardAvoidingView, Platform, TextInput, TouchableOpacity } from 'react-native';
+import React, {useContext, useEffect} from 'react'
+import { View, Text, KeyboardAvoidingView, Platform, TextInput, TouchableOpacity, Keyboard, Alert } from 'react-native';
 import { Background } from '../components/Background';
 import { loginStyles } from '../theme/loginStyles';
 import { Logo } from '../components/Logo';
+import { AuthContext } from '../context/AuthContext';
+import { useForm } from '../hooks/useFrome';
+import { StackScreenProps } from '@react-navigation/stack';
 
-export const LoginScreen = () => {
+interface Props extends StackScreenProps<any, any> {}
+
+export const LoginScreen = ({navigation}: Props) => {
+
+  const { singIn, errorMessage, removeError} = useContext(AuthContext);
+
+  const { correo, password, onChange} = useForm({
+    correo: '',
+    password: ''
+  });
+
+  useEffect(() => {
+    if (errorMessage.length === 0) return;
+
+    Alert.alert('Login Incorrecto', errorMessage, [{
+      text: 'OK',
+      onPress: () => removeError()
+    }] );
+
+  }, [errorMessage]);
+
+
+  const onLogin = () => {
+    Keyboard.dismiss();
+    // console.log({correo, password});
+    singIn({correo, password});
+  }
+
   return (
     <>
       <Background />
@@ -28,9 +58,9 @@ export const LoginScreen = () => {
               (Platform.OS === 'ios') && loginStyles.inputFieldIOS
             ]}
             selectionColor="white"
-            // onChangeText={ (value) => onChange(value, 'email')}
-            // value={correo}
-            // onSubmitEditing={ onLogin }
+            onChangeText={ (value) => onChange(value, 'correo')}
+            value={correo}
+            onSubmitEditing={ onLogin }
             autoCapitalize='none'
             autoCorrect={false}
           />
@@ -49,9 +79,9 @@ export const LoginScreen = () => {
             ]}
             selectionColor="white"
 
-            // onChangeText={ (value) => onChange(value, 'password')}
-            // value={ password }
-            // onSubmitEditing={ onLogin }
+            onChangeText={ (value) => onChange(value, 'password')}
+            value={ password }
+            onSubmitEditing={ onLogin }
 
             autoCapitalize='none'
             autoCorrect={false}
@@ -62,7 +92,7 @@ export const LoginScreen = () => {
             <TouchableOpacity
               activeOpacity={ 0.8 }
               style={ loginStyles.button }
-              // onPress={ onLogin }
+              onPress={ onLogin }
             >
               <Text style={loginStyles.buttonText}>Login</Text>
             </TouchableOpacity>

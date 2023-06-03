@@ -20,6 +20,14 @@ type AuthAction =
 export const authReducer = (state: AuthState, action: AuthAction): AuthState => {
     switch (action.type) {
 
+        case 'addError':
+            return {
+                ...state,
+                user: null,
+                status: 'not_authenticated',
+                token: null,
+                errorMessage: action.payload,
+            }
 
         case 'singUp':
             return {
@@ -33,7 +41,7 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
 
         case 'removeError':
             return {
-              ...state,
+                ...state,
                 errorMessage: ''
             }
 
@@ -49,23 +57,6 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
             }
 
 
-        // case 'checking':
-        //     return {
-        //       ...state,
-        //         status: 'checking'
-        //     };
-        // case 'authenticated':
-        //     return {
-        //       ...state,
-        //         status: 'authenticated',
-        //         logged: true
-        //     };
-        // case 'not_authenticated':
-        //     return {
-        //       ...state,
-        //         status: 'not_authenticated',
-        //         logged: false
-        //     };
         default:
             return state;
     }
