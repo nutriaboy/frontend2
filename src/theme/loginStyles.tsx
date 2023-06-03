@@ -57,7 +57,8 @@ export const loginStyles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderRadius: 100
-    }
+    },
+    
 
 
 });

@@ -96,6 +96,17 @@ export const LoginScreen = ({navigation}: Props) => {
             >
               <Text style={loginStyles.buttonText}>Login</Text>
             </TouchableOpacity>
+          </View>
+
+          {/* Crear una nueva cuenta */}
+          <View style= { loginStyles.newUserContainer}>
+            <TouchableOpacity
+              activeOpacity={ 0.8 }
+              onPress={() => navigation.navigate('RegisterScreen')}>
+
+                <Text style={loginStyles.buttonText}>Nueva Cuenta</Text>
+
+              </TouchableOpacity>
 
           </View>
 
