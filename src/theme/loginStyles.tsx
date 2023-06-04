@@ -7,7 +7,8 @@ export const loginStyles = StyleSheet.create({
         paddingHorizontal: 30,
         justifyContent: 'center',
         height: 600,
-        marginBottom:50
+        marginBottom:50,
+        // backgroundColor: '#fff'
     },
     title:{
         color: 'white',
@@ -58,7 +59,15 @@ export const loginStyles = StyleSheet.create({
         paddingVertical: 5,
         borderRadius: 100
     },
-    
+    buttonNext: {
+        borderWidth: 2,
+        borderColor: 'white',
+        paddingHorizontal: 20,
+        paddingVertical: 5,
+        borderRadius: 5,
+        alignItems: 'center',
+        // marginTop: 25,
+    }
 
 
 });
