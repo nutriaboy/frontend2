@@ -38,6 +38,7 @@ export const ProtectedScreen = () => {
 
       <Text style={styles.title}>Cervezas</Text>
 
+    <View style ={styles.containerButtons}>
       <TouchableOpacity
         activeOpacity={0.5}
         style={styles.buttonExited}
@@ -53,6 +54,8 @@ export const ProtectedScreen = () => {
       >
         <Text style={styles.textButtonSub}>Suscríbete </Text>
       </TouchableOpacity>
+
+    </View>
 
    
 
@@ -121,14 +124,18 @@ const styles = StyleSheet.create({
     // backgroundColor:'purple',
     flexWrap: 'wrap',
   },
+  containerButtons: {
+    width: 115,
+    alignSelf: 'flex-end',
+    right: 15,
+  },
   buttonExited: {
     backgroundColor: '#F1FCFF', //#F1FCFF
     borderRadius: 10,
     borderColor: 'black',
     borderWidth: 1,
     width: 115,
-    alignSelf: 'flex-end',
-    right: 10,
+    alignSelf: 'center',
   },
   textButtonExited: {
     color: '#FFA3A2',
@@ -142,8 +149,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     // borderWidth: 1,
     width: 115,
-    alignSelf: 'flex-end',
-    right: 10,
+    alignSelf: 'center',
     marginTop: 5,
   },
   textButtonSub: {
