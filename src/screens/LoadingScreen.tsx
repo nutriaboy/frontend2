@@ -17,7 +17,7 @@ export const LoadingScreen = () => {
                 size={50}
                 color="#16161f"
             />
-            <View style={{ position: 'absolute' }}>
+            <View style={{ position: 'absolute', bottom: 20 }}>
                 <Button 
                     title="Log Out"
                     onPress={logOut}

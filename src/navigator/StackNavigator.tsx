@@ -6,7 +6,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { LoginScreen } from '../screens/LoginScreen';
 import { RegisterScreen } from '../screens/RegisterScreen';
 import { LoadingScreen } from '../screens/LoadingScreen';
-import { Navigator } from './Navigator';
+import TabsAndroid from './Tabs';
+// import TabsAndroid, { Tabs } from './Tabs';
 
 const Stack = createStackNavigator();
 
@@ -35,7 +36,7 @@ export const StackNav = () => {
                     )
                     : (
                         <>
-                            <Stack.Screen name="Navigator" component={Navigator} />
+                            <Stack.Screen name="Tabs" component={TabsAndroid} />
                         </>
                     )
             }
