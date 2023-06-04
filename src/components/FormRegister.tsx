@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
-import { View, Text, TextInput, Platform, ScrollView } from 'react-native';
-import { loginStyles } from '../theme/loginStyles';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useForm } from '../hooks/useFrome';
+import React, { useContext, useState } from 'react'
+import { View, Text, TextInput, Platform, TouchableOpacity } from 'react-native';
 import { CommonActions, useNavigation } from '@react-navigation/native';
+
+import { AuthContext } from '../context/AuthContext';
+import { useForm } from '../hooks/useFrome';
+import { loginStyles } from '../theme/loginStyles';
 
 export const FormRegister = () => {
 
+    const { singUp } = useContext(AuthContext)
     const [formPartition, setFormPartition] = useState(true);
     const navigator = useNavigation();
     const {
@@ -35,7 +37,7 @@ export const FormRegister = () => {
             return setFormPartition(false);
         }
 
-        console.log({
+        singUp({
             nombre,
             apellido,
             correo,
@@ -45,11 +47,11 @@ export const FormRegister = () => {
             direccion,
             genero,
         });
-        navigator.dispatch(
-            CommonActions.navigate({
-                name: 'LoginScreen',
-            })
-        )
+        // navigator.dispatch(
+        //     CommonActions.navigate({
+        //         name: 'LoginScreen',
+        //     })
+        // )
     }
     const handleReturn = () => {
         navigator.dispatch(
@@ -64,7 +66,7 @@ export const FormRegister = () => {
         if (formPartition) {
             return (nombre.length > 1 && apellido.length > 1 && correo.length > 1 && rut.length > 1) ? true : false;
         }
-        return (password.length > 1 && telefono.length > 1 && direccion.length > 1 && genero.length > 1) ? true : false;
+        return (password.length > 1 && telefono.length > 1 && direccion.length > 1 && genero.length >= 1) ? true : false;
     }
 
 

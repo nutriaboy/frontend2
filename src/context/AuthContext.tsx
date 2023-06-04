@@ -91,6 +91,7 @@ export const AuthProvider = ({ children }: any) => {
     const singUp = async ({
         correo, password, nombre, apellido, telefono, direccion, genero, rut }: RegisterData) => {
         try {
+            // console.log(correo, password, nombre, apellido, telefono, direccion, genero, rut);
             const { data } = await connectionApi.post<LoginDataResult>('/usuarios', {
                 correo,
                 password,
@@ -115,6 +116,7 @@ export const AuthProvider = ({ children }: any) => {
             }
 
         } catch (error: any) {
+            console.log(error);
             dispatch({
                 type: 'addError',
                 payload: error.response.data.msg || 'Revisar la información'
