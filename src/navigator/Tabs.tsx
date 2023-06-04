@@ -28,7 +28,6 @@ const Tabs = () => {
                 options={{
                     tabBarLabel: 'Inicio',
                     // tabBarColor: '#694FAB',
-                    // tabBarBadge: 2, // Icono de norificaciones
                     tabBarIcon: ({ color }) => (
                         <Icon name="home-sharp" size={25} color={color} />
                     )
@@ -39,6 +38,7 @@ const Tabs = () => {
                 component={CartScreen}
                 options={{
                     tabBarLabel: 'Carro',
+                    tabBarBadge: 2, // Icono de norificaciones o false
                     // tabBarColor: '#009387',
                     tabBarIcon: ({ color }) => (
                         <Icon name="cart" size={30} color={color} />
