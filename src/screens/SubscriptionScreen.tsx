@@ -141,10 +141,10 @@ export const SubscriptionScreen = ({ navigation }: Props) => {
                     visible={isVisible}
                     transparent={true}
                 >
-                    <View style={styles.containerModal}>
-                        <View style={styles.modalScreen}>
+                    <View style={stylesSub.containerModal}>
+                        <View style={stylesSub.modalScreen}>
 
-                            <View style={styles.sectionTitle}>
+                            <View style={stylesSub.sectionTitle}>
                                 <Text style={{
                                     fontSize: 20,
                                     fontWeight: 'bold',
@@ -153,14 +153,14 @@ export const SubscriptionScreen = ({ navigation }: Props) => {
                                 }}> WebPay</Text>
                             </View>
 
-                            <View style={styles.sectionBtn}>
+                            <View style={stylesSub.sectionBtn}>
 
                                 <Pressable
                                     onPress={() => {setIsVisible(!isVisible)}}
 
-                                    style={{ ...styles.blackButton, marginBottom: 10, alignSelf: 'center' }}
+                                    style={{ ...stylesSub.blackButton, marginBottom: 10, alignSelf: 'center' }}
                                 >
-                                    <Text style={styles.buttonText}>Pagar</Text>
+                                    <Text style={stylesSub.buttonText}>Pagar</Text>
                                 </Pressable>
 
                                 <Pressable
@@ -169,7 +169,7 @@ export const SubscriptionScreen = ({ navigation }: Props) => {
                                     }}
                                     style={{ marginBottom: 15 }}
                                 >
-                                    <Text style={{ ...styles.buttonTextModal, alignSelf: 'center' }}>Cancelar</Text>
+                                    <Text style={{ ...stylesSub.buttonTextModal, alignSelf: 'center' }}>Cancelar</Text>
                                 </Pressable>
                             </View>
 
@@ -188,7 +188,7 @@ export const SubscriptionScreen = ({ navigation }: Props) => {
 }
 
 
-const styles = StyleSheet.create({
+export const stylesSub = StyleSheet.create({
 
     containerModal: {
         flex: 1,
