@@ -8,7 +8,7 @@ export const RegisterScreen = () => {
     <>
     
       <View 
-        style={{ flex: 1, backgroundColor: '#AC51B3'}}
+        style={{ flex: 1, backgroundColor: '#7764E3'}}
       >
         <View
           style={{ ...loginStyles.formContainer }}

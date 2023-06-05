@@ -37,7 +37,8 @@ export const LoginScreen = ({navigation}: Props) => {
 
   return (
     <>
-      <Background />
+    {/* #AC51B3  */}
+      <Background backgroundColor={'#7764E3'}/> 
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={(Platform.OS === 'ios') ? 'padding' : 'height'}

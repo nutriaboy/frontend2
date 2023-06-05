@@ -1,12 +1,16 @@
 import React from 'react'
 import { View } from 'react-native';
 
-export const Background = () => {
+type Props = {
+  backgroundColor: string;
+};
+
+export const Background = ({backgroundColor }:Props) => {
   return (
     <View
         style={{
             position: 'absolute',
-            backgroundColor: '#AC51B3',
+            backgroundColor: backgroundColor,
             top: -430,
             width: 1000,
             height: 1200,
