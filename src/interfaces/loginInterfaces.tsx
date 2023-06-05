@@ -10,9 +10,10 @@ export interface RegisterData {
     apellido: string;
     correo: string;
     password: string;
-    telefono: string;
-    direccion: string;
-    genero: string;
+    telefono?: string;
+    direccion?: string;
+    ciudad?: string;
+    genero?: string;
     rut: string;
 }
 
@@ -31,6 +32,7 @@ export interface Usuario {
     rut:       string;
     telefono:  string;
     direccion: string;
+    ciudad:    string;
     genero:    string;
     uid:       string;
 }

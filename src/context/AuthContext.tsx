@@ -88,19 +88,11 @@ export const AuthProvider = ({ children }: any) => {
         }
     }
 
-    const singUp = async ({
-        correo, password, nombre, apellido, telefono, direccion, genero, rut }: RegisterData) => {
+    const singUp = async ({correo, password, nombre, apellido, rut }: RegisterData) => {
         try {
-            // console.log(correo, password, nombre, apellido, telefono, direccion, genero, rut);
+            // console.log(correo, password, nombre, apellido, rut);
             const { data } = await connectionApi.post<LoginDataResult>('/usuarios', {
-                correo,
-                password,
-                nombre,
-                apellido,
-                telefono,
-                direccion,
-                genero, rut
-            });
+                correo, password, nombre, apellido, rut });
 
             if (data.ok) {
                 dispatch({
