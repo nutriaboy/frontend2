@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }: any) => {
             type: 'singUp',
             payload: {
                 token: resp.data.token,
-                user: resp.data.user,
+                user: resp.data.usuario,
                 logged: true
             }
         });

@@ -1,12 +1,15 @@
-import React, {useState} from 'react'
+import React, { useState, useContext } from 'react'
 import { View, Text, Platform, TextInput, Pressable, TouchableOpacity, Modal, StyleSheet } from 'react-native';
 import { loginStyles } from '../theme/loginStyles';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useForm } from '../hooks/useFrome';
+import { AuthContext } from '../context/AuthContext';
 
 interface Props extends StackScreenProps<any, any> { };
 
 export const SubscriptionScreen = ({ navigation }: Props) => {
+
+    const {user} = useContext(AuthContext)
 
     const { telefono, ciudad, direccion, genero, onChange } = useForm({
         telefono: '',
@@ -14,16 +17,17 @@ export const SubscriptionScreen = ({ navigation }: Props) => {
         direccion: '',
         genero: ''
     });
-  const [isVisible, setIsVisible] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
 
     const onPress = () => {
         setIsVisible(!isVisible);
+        console.log(user?.uid)
         console.log({ telefono, ciudad, direccion, genero });
     }
 
     const todoOk = () => {
-        return ( telefono.length > 1 && ciudad.length > 1 && direccion.length > 1 && genero.length >= 1 ) ? true : false;
+        return (telefono.length > 1 && ciudad.length > 1 && direccion.length > 1 && genero.length >= 1) ? true : false;
     }
 
     return (
@@ -113,8 +117,8 @@ export const SubscriptionScreen = ({ navigation }: Props) => {
                     onPress={onPress}
                     style={
                         (todoOk()) ?
-                        { ...loginStyles.button, borderRadius: 5, marginTop: 20, backgroundColor: "#C32BF0", borderColor: "#C32BF0" }
-                        : { ...loginStyles.button, borderRadius: 5, marginTop: 20, backgroundColor: "#D594EF", borderColor: "#D594EF" }
+                            { ...loginStyles.button, borderRadius: 5, marginTop: 20, backgroundColor: "#C32BF0", borderColor: "#C32BF0" }
+                            : { ...loginStyles.button, borderRadius: 5, marginTop: 20, backgroundColor: "#D594EF", borderColor: "#D594EF" }
                     }
                     disabled={!todoOk()}
                 >
@@ -149,25 +153,24 @@ export const SubscriptionScreen = ({ navigation }: Props) => {
                                 }}> WebPay</Text>
                             </View>
 
-
-
                             <View style={styles.sectionBtn}>
 
+                                <Pressable
+                                    onPress={() => {setIsVisible(!isVisible)}}
 
-
-
-
+                                    style={{ ...styles.blackButton, marginBottom: 10, alignSelf: 'center' }}
+                                >
+                                    <Text style={styles.buttonText}>Pagar</Text>
+                                </Pressable>
 
                                 <Pressable
                                     onPress={() => {
                                         setIsVisible(!isVisible);
                                     }}
-
                                     style={{ marginBottom: 15 }}
                                 >
-                                    <Text style={{ ...styles.buttonTextModal, alignSelf: 'center' }}>Pagar</Text>
+                                    <Text style={{ ...styles.buttonTextModal, alignSelf: 'center' }}>Cancelar</Text>
                                 </Pressable>
-
                             </View>
 
 
@@ -192,22 +195,22 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.35)',
         justifyContent: 'center',
         alignItems: 'center'
-      },
-      modalScreen: {
-        width: 300,
-        height: 200,
+    },
+    modalScreen: {
+        width: 350,
+        height: 300,
         backgroundColor: 'white',
         justifyContent: 'center',
         // alignItems: 'center',
         shadowOffset: {
-          width: 0,
-          height: 10
+            width: 0,
+            height: 10
         },
         shadowOpacity: 0.25,
         elevation: 10,
         borderRadius: 10
-      },
-      sectionTitle: {
+    },
+    sectionTitle: {
         position: 'absolute',
         justifyContent: 'center',
         top: 0,
@@ -215,17 +218,36 @@ const styles = StyleSheet.create({
         width: '100%',
         borderBottomColor: 'rgba(0, 0, 0, 0.2)',
         borderBottomWidth: 1,
-      },
-      sectionBtn: {
+    },
+    sectionBtn: {
         position: 'absolute',
         bottom: 0,
         width: '100%',
         // backgroundColor:'red'
-      },
-      buttonTextModal: {
+    },
+    buttonTextModal: {
         color: '#5856D6',
         fontSize: 18,
         // fontWeight: '400'
-    
+
+    },
+    blackButton: {
+        height: 45,
+        width: 200,
+        backgroundColor: '#1c1c1c',
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 3
+        },
+        shadowOpacity: 0.27,
+        elevation: 6
+      },
+      buttonText: {
+        color: 'white',
+        fontSize: 18
       },
 })
