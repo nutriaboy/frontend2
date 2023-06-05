@@ -1,5 +1,5 @@
-import React  from 'react'
-import { View, Text, Platform, TextInput, Button, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react'
+import { View, Text, Platform, TextInput, Pressable, TouchableOpacity, Modal, StyleSheet } from 'react-native';
 import { loginStyles } from '../theme/loginStyles';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useForm } from '../hooks/useFrome';
@@ -14,15 +14,21 @@ export const SubscriptionScreen = ({ navigation }: Props) => {
         direccion: '',
         genero: ''
     });
+  const [isVisible, setIsVisible] = useState(false);
+
 
     const onPress = () => {
+        setIsVisible(!isVisible);
+        console.log({ telefono, ciudad, direccion, genero });
+    }
 
-        console.log({telefono, ciudad, direccion, genero});
+    const todoOk = () => {
+        return ( telefono.length > 1 && ciudad.length > 1 && direccion.length > 1 && genero.length >= 1 ) ? true : false;
     }
 
     return (
         <View style={{ flex: 1, backgroundColor: '#7764E3' }}>
-            
+
             <View
                 style={{ ...loginStyles.formContainer, justifyContent: 'center', }}
             >
@@ -105,7 +111,12 @@ export const SubscriptionScreen = ({ navigation }: Props) => {
                 <TouchableOpacity
                     activeOpacity={0.8}
                     onPress={onPress}
-                    style={{ ...loginStyles.button, borderRadius: 5, marginTop: 20, backgroundColor: "#C32BF0", borderColor: "#C32BF0" }}
+                    style={
+                        (todoOk()) ?
+                        { ...loginStyles.button, borderRadius: 5, marginTop: 20, backgroundColor: "#C32BF0", borderColor: "#C32BF0" }
+                        : { ...loginStyles.button, borderRadius: 5, marginTop: 20, backgroundColor: "#D594EF", borderColor: "#D594EF" }
+                    }
+                    disabled={!todoOk()}
                 >
                     <Text style={{ ...loginStyles.buttonText, alignSelf: 'center', color: 'white' }}>Suscribir</Text>
                 </TouchableOpacity>
@@ -115,18 +126,106 @@ export const SubscriptionScreen = ({ navigation }: Props) => {
                     activeOpacity={0.8}
                     onPress={() => navigation.pop()}
                     style={{ ...loginStyles.button, borderRadius: 5, marginTop: 20, backgroundColor: "#BDB3F2", borderColor: "#BDB3F2" }}
-                    
-
                 >
                     <Text style={{ ...loginStyles.buttonText, alignSelf: 'center', color: '#4D4A63' }}>Volver</Text>
                 </TouchableOpacity>
 
 
+                {/*-----------Modal Inicio----------*/}
+                <Modal
+                    animationType='fade'
+                    visible={isVisible}
+                    transparent={true}
+                >
+                    <View style={styles.containerModal}>
+                        <View style={styles.modalScreen}>
 
-                {/* <Button
-                    title='Volver'
-                /> */}
+                            <View style={styles.sectionTitle}>
+                                <Text style={{
+                                    fontSize: 20,
+                                    fontWeight: 'bold',
+                                    marginLeft: 20,
+                                    color: 'black'
+                                }}> WebPay</Text>
+                            </View>
+
+
+
+                            <View style={styles.sectionBtn}>
+
+
+
+
+
+
+                                <Pressable
+                                    onPress={() => {
+                                        setIsVisible(!isVisible);
+                                    }}
+
+                                    style={{ marginBottom: 15 }}
+                                >
+                                    <Text style={{ ...styles.buttonTextModal, alignSelf: 'center' }}>Pagar</Text>
+                                </Pressable>
+
+                            </View>
+
+
+                        </View>
+
+                    </View>
+                </Modal>
+                {/*-----------Modal Fin----------*/}
+
+
+
             </View>
         </View>
     )
 }
+
+
+const styles = StyleSheet.create({
+
+    containerModal: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.35)',
+        justifyContent: 'center',
+        alignItems: 'center'
+      },
+      modalScreen: {
+        width: 300,
+        height: 200,
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        // alignItems: 'center',
+        shadowOffset: {
+          width: 0,
+          height: 10
+        },
+        shadowOpacity: 0.25,
+        elevation: 10,
+        borderRadius: 10
+      },
+      sectionTitle: {
+        position: 'absolute',
+        justifyContent: 'center',
+        top: 0,
+        height: 65,
+        width: '100%',
+        borderBottomColor: 'rgba(0, 0, 0, 0.2)',
+        borderBottomWidth: 1,
+      },
+      sectionBtn: {
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        // backgroundColor:'red'
+      },
+      buttonTextModal: {
+        color: '#5856D6',
+        fontSize: 18,
+        // fontWeight: '400'
+    
+      },
+})
