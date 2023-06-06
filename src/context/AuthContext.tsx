@@ -17,7 +17,7 @@ type AuthContextProps = {
     singIn: (loginData: LoginData) => void;
     logOut: () => void;
     editUser: (rest_0: EditData) => Promise<void>
-    createSubscriptionUser?: (rest_0: EditData) => Promise<void>
+    createSubscriptionUser: (rest_0: EditData) => Promise<void>
     removeError: () => void;
 }
 

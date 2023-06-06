@@ -4,12 +4,15 @@ import { loginStyles } from '../theme/loginStyles';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useForm } from '../hooks/useFrome';
 import { AuthContext } from '../context/AuthContext';
+import { SubContext } from '../context/SubContext';
 
 interface Props extends StackScreenProps<any, any> { };
 
+//TODO: Crear alertas de errores
 export const SubscriptionScreen = ({ navigation }: Props) => {
 
-    const {user} = useContext(AuthContext)
+    const {user} = useContext(AuthContext);
+    const { createSub } = useContext(SubContext);
 
     const { telefono, ciudad, direccion, genero, onChange } = useForm({
         telefono: '',
@@ -20,11 +23,13 @@ export const SubscriptionScreen = ({ navigation }: Props) => {
     const [isVisible, setIsVisible] = useState(false);
 
 
-    const onPress = () => {
+    const PayAndSub = () => {
+        const id = user!.uid;
+        createSub({id, telefono, ciudad, direccion, genero});
+        // console.log({telefono, ciudad, direccion, genero})
         setIsVisible(!isVisible);
-        console.log(user?.uid)
-        console.log({ telefono, ciudad, direccion, genero });
     }
+
 
     const todoOk = () => {
         return (telefono.length > 1 && ciudad.length > 1 && direccion.length > 1 && genero.length >= 1) ? true : false;
@@ -114,7 +119,7 @@ export const SubscriptionScreen = ({ navigation }: Props) => {
 
                 <TouchableOpacity
                     activeOpacity={0.8}
-                    onPress={onPress}
+                    onPress={()=> setIsVisible(!isVisible)}
                     style={
                         (todoOk()) ?
                             { ...loginStyles.button, borderRadius: 5, marginTop: 20, backgroundColor: "#C32BF0", borderColor: "#C32BF0" }
@@ -156,7 +161,7 @@ export const SubscriptionScreen = ({ navigation }: Props) => {
                             <View style={stylesSub.sectionBtn}>
 
                                 <Pressable
-                                    onPress={() => {setIsVisible(!isVisible)}}
+                                    onPress={PayAndSub}
 
                                     style={{ ...stylesSub.blackButton, marginBottom: 10, alignSelf: 'center' }}
                                 >

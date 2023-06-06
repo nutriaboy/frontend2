@@ -3,7 +3,7 @@ import { View, Text, Platform, TouchableOpacity, TextInput, Modal, Pressable, St
 import { loginStyles } from '../theme/loginStyles';
 import { AuthContext } from '../context/AuthContext';
 
-
+//TODO: Crear alertas de errores en la modal (?)
 export const ProfileScreen = () => {
     const { user, editUser } = useContext(AuthContext);
 

@@ -25,7 +25,6 @@ export const ProtectedScreen = () => {
   }
 
   const handleSub  = () => {
-    console.log('suscrito');  
     navigator.dispatch(
       CommonActions.navigate({
           name: 'SubscriptionScreen',

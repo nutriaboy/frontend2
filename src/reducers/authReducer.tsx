@@ -59,7 +59,6 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
             }
             
         case 'editUser':
-            console.log(action.payload);
             return {
               ...state,
                 user: action.payload
