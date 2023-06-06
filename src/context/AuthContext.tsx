@@ -1,6 +1,6 @@
 import React, { createContext, useReducer, useEffect } from 'react';
 
-import { LoginData, LoginDataResult, RegisterData, Usuario } from '../interfaces/loginInterfaces';
+import { EditData, LoginData, LoginDataResult, RegisterData, Usuario } from '../interfaces/loginInterfaces';
 import { AuthState, authReducer } from '../reducers/authReducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import connectionApi from '../api/ConnectionApi';
@@ -15,8 +15,8 @@ type AuthContextProps = {
     status: 'checking' | 'authenticated' | 'not_authenticated';
     singUp: (registerData: RegisterData) => void;
     singIn: (loginData: LoginData) => void;
-    editUser?: (id: string, nombre: string, apellido: string, correo: string, direccion: string, telefono: string) => Promise<void>;
     logOut: () => void;
+    editUser: (rest_0: EditData) => Promise<void>
     removeError: () => void;
 }
 
@@ -88,11 +88,12 @@ export const AuthProvider = ({ children }: any) => {
         }
     }
 
-    const singUp = async ({correo, password, nombre, apellido, rut }: RegisterData) => {
+    const singUp = async ({ correo, password, nombre, apellido, rut }: RegisterData) => {
         try {
             // console.log(correo, password, nombre, apellido, rut);
             const { data } = await connectionApi.post<LoginDataResult>('/usuarios', {
-                correo, password, nombre, apellido, rut });
+                correo, password, nombre, apellido, rut
+            });
 
             if (data.ok) {
                 dispatch({
@@ -116,12 +117,38 @@ export const AuthProvider = ({ children }: any) => {
         }
     }
 
+    const editUser = async (...rest: [EditData]): Promise<void> => {
+
+        try {
+            const { id, nombre, apellido, correo, rut } = rest[0];
+
+            const { data } = await connectionApi.put(`/usuarios/${id}`, {
+                nombre, apellido, correo, rut
+            });
+            if (data.ok) {
+                dispatch({
+                    type: 'editUser',
+                    payload: data.usuario
+                });
+            }
+
+        } catch (error: any) {
+            dispatch({
+                type: 'addError',
+                payload: error.response.data.msg || 'Revisar la información'
+            });
+        }
+    };
+
+
+
     const logOut = async () => {
         await AsyncStorage.removeItem('token');
         dispatch({ type: 'logOut' });
     }
 
-    const removeError = () => dispatch({ type:'removeError' });
+
+    const removeError = () => dispatch({ type: 'removeError' });
 
     return (
         <AuthContext.Provider value={{
@@ -129,6 +156,7 @@ export const AuthProvider = ({ children }: any) => {
             singIn,
             singUp,
             logOut,
+            editUser,
             removeError,
         }}>
             {children}

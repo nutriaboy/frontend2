@@ -17,6 +17,19 @@ export interface RegisterData {
     rut: string;
 }
 
+export interface EditData {
+    id: string;
+    nombre?: string;
+    apellido?: string;
+    correo?: string;
+    password?: string;
+    telefono?: string;
+    direccion?: string;
+    ciudad?: string;
+    genero?: string;
+    rut?: string;
+}
+
 export interface LoginDataResult {
     ok:      boolean;
     usuario: Usuario;

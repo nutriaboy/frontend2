@@ -5,39 +5,47 @@ import { AuthContext } from '../context/AuthContext';
 
 
 export const ProfileScreen = () => {
-    const { user } = useContext(AuthContext);
+    const { user, editUser } = useContext(AuthContext);
+
     const [dataUser, setDataUser] = useState({
         nombre: user?.nombre,
         apellido: user?.apellido,
         correo: user?.correo,
-        rut: user?.rut
+        rut: user?.rut,
     });
     const { nombre, apellido, correo, rut } = dataUser;
+
     const [isVisible, setIsVisible] = useState(false);
 
-
     useEffect(() => {
-      if (isVisible) {
-        setDataUser({
-          nombre: user?.nombre,
-          apellido: user?.apellido,
-          correo: user?.correo,
-          rut: user?.rut
-        });
-    }
+        if (isVisible) {
+            setDataUser({
+                nombre: user?.nombre,
+                apellido: user?.apellido,
+                correo: user?.correo,
+                rut: user?.rut,
+            })
+        }
     }, [isVisible])
-    
 
-    const onChange = ( value: string, field: any ) => {
+
+    const onChange = (value: string, field: any) => {
         setDataUser({
             ...dataUser,
             [field]: value
         });
     }
 
+    const saveChanges = () => {
+        const id = user!.uid;
+        editUser({ id, nombre, apellido, correo, rut });
+
+        setIsVisible(!isVisible);
+    }
+
 
     const onPress = () => {
-        
+
         setIsVisible(true);
     };
 
@@ -63,7 +71,7 @@ export const ProfileScreen = () => {
                         (Platform.OS === 'ios') && loginStyles.inputFieldIOS
                     ]}
                     selectionColor="white"
-                    value={user?.nombre ?? ''}
+                    value={user?.nombre}
                     autoCapitalize='words'
                     autoCorrect={false}
                 />
@@ -201,7 +209,7 @@ export const ProfileScreen = () => {
                         <View style={styles.sectionBtn}>
 
                             <Pressable
-                                onPress={() => { setIsVisible(!isVisible) }}
+                                onPress={saveChanges}
 
                                 style={{ ...styles.blackButton, marginBottom: 10, alignSelf: 'center' }}
                             >
@@ -298,17 +306,17 @@ const styles = StyleSheet.create({
         color: 'black',
         fontWeight: 'bold',
         fontSize: 15,
-      },
-      inputField: {
+    },
+    inputField: {
         color: 'black',
         fontSize: 20,
         borderBottomColor: 'black',
         borderBottomWidth: 2,
         paddingBottom: 4,
         marginBottom: 10
-      },
-      form: {
+    },
+    form: {
         marginLeft: 20,
         marginRight: 20,
-      },
+    },
 })
