@@ -17,6 +17,7 @@ type AuthContextProps = {
     singIn: (loginData: LoginData) => void;
     logOut: () => void;
     editUser: (rest_0: EditData) => Promise<void>
+    createSubscriptionUser?: (rest_0: EditData) => Promise<void>
     removeError: () => void;
 }
 
@@ -117,6 +118,12 @@ export const AuthProvider = ({ children }: any) => {
         }
     }
 
+    const logOut = async () => {
+        await AsyncStorage.removeItem('token');
+        dispatch({ type: 'logOut' });
+    }
+
+
     const editUser = async (...rest: [EditData]): Promise<void> => {
 
         try {
@@ -140,13 +147,26 @@ export const AuthProvider = ({ children }: any) => {
         }
     };
 
+    const createSubscriptionUser = async (...rest: [EditData]) => { 
+        try {
+            const { id, telefono, ciudad, direccion, genero } = rest[0];
 
-
-    const logOut = async () => {
-        await AsyncStorage.removeItem('token');
-        dispatch({ type: 'logOut' });
+            const { data } = await connectionApi.put(`/usuarios/${id}`, {
+                telefono, ciudad, direccion, genero
+            });
+            if (data.ok) {
+                dispatch({
+                    type:'subscriptionUser',
+                    payload: data.usuario
+                });
+            }
+        } catch (error: any) {
+            dispatch({
+                type: 'addError',
+                payload: error.response.data.msg || 'Revisar la información'
+            });
+        }
     }
-
 
     const removeError = () => dispatch({ type: 'removeError' });
 
@@ -156,6 +176,7 @@ export const AuthProvider = ({ children }: any) => {
             singIn,
             singUp,
             logOut,
+            createSubscriptionUser,
             editUser,
             removeError,
         }}>

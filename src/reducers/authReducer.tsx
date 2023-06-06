@@ -17,6 +17,7 @@ type AuthAction =
     | { type: 'removeError' }
     | { type: 'not_authenticated' }
     | { type: 'editUser', payload: any }
+    | { type: 'subscriptionUser', payload: any}
 
 export const authReducer = (state: AuthState, action: AuthAction): AuthState => {
     switch (action.type) {
