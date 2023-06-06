@@ -1,9 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { View, Text, Platform, TouchableOpacity, TextInput, Modal, Pressable, StyleSheet } from 'react-native';
+import { View, Text, Platform, TouchableOpacity, TextInput, Modal, Pressable, StyleSheet, Alert } from 'react-native';
 import { loginStyles } from '../theme/loginStyles';
 import { AuthContext } from '../context/AuthContext';
 
-//TODO: Crear alertas de errores en la modal (?)
 export const ProfileScreen = () => {
     const { user, editUser } = useContext(AuthContext);
 
@@ -36,11 +35,24 @@ export const ProfileScreen = () => {
         });
     }
 
-    const saveChanges = () => {
+
+    const alertSaveChanges = () => {
         const id = user!.uid;
         editUser({ id, nombre, apellido, correo, rut });
 
         setIsVisible(!isVisible);
+    }
+
+    const saveChanges = () => {
+        Alert.alert('Confirmar Cambios', '¿Desea guardar los cambios?', [
+            {
+                text: 'Cancelar',
+                onPress: () => null
+            },
+            {
+                text: 'OK',
+                onPress: () => alertSaveChanges()
+            }]);
     }
 
 

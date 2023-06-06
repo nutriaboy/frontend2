@@ -15,12 +15,14 @@ export const SubscriptionScreen = ({ navigation }: Props) => {
     const { createSub } = useContext(SubContext);
 
     const { telefono, ciudad, direccion, genero, onChange } = useForm({
-        telefono: '',
-        ciudad: '',
-        direccion: '',
-        genero: ''
+        telefono:  user?.telefono  || '',
+        ciudad:    user?.ciudad    || '',
+        direccion: user?.direccion || '',
+        genero:    user?.genero    || ''
     });
     const [isVisible, setIsVisible] = useState(false);
+
+    
 
 
     const PayAndSub = () => {
