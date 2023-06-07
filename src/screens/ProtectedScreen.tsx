@@ -4,15 +4,23 @@ import { AuthContext } from '../context/AuthContext';
 import { BeerItem } from '../components/BeerItem';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { CommonActions, useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+
+import { Actionsheet, Box, Button, Center, useDisclose } from "native-base";
 
 export const ProtectedScreen = () => {
 
   const { user, token, logOut } = useContext(AuthContext);
 
   const navigator = useNavigation();
- 
+
+
+  const { isOpen, onOpen, onClose } = useDisclose();
+
 
   const handleLogOut = () => {
+    onClose();
     Alert.alert('Cerrar Sesión', '¿Desea salir de la sesión?', [
       {
         text: 'Cancelar',
@@ -24,41 +32,80 @@ export const ProtectedScreen = () => {
       }]);
   }
 
-  const handleSub  = () => {
+  const handleSub = () => {
+    onClose();
     navigator.dispatch(
       CommonActions.navigate({
-          name: 'SubscriptionScreen',
+        name: 'SubscriptionScreen',
       })
-  )
+    )
   }
+
+  // const onOpen = () => { 
+  //   console.log('hola')  
+  // }
+
+
 
   return (
     <View style={styles.container}>
 
       <Text style={styles.title}>Cervezas</Text>
 
-    <View style ={styles.containerButtons}>
-      <TouchableOpacity
-        activeOpacity={0.5}
-        style={styles.buttonExited}
-        onPress={handleLogOut}
-      >
-        <Text style={styles.textButtonExited}>Cerrar Sesión</Text>
-      </TouchableOpacity>
+      <View style={styles.containerButtons}>
+        {/* <TouchableOpacity
+          activeOpacity={0.5}
+          style={styles.buttonExited}
+          onPress={handleLogOut}
+        >
+          <Text style={styles.textButtonExited}>Cerrar Sesión</Text>
+        </TouchableOpacity> */}
 
-      <TouchableOpacity
-        activeOpacity={0.5}
-        style={styles.buttonSub}
-        onPress={handleSub}
-      >
-        <Text style={styles.textButtonSub}>Suscríbete </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={{...styles.buttonSub, left: 50 }}
+          onPress={onOpen}
+          // onPress={handleSub}
+        >
+          <Icon name="menu" size={40} />
+          {/* <Text style={styles.textButtonSub}>Suscríbete </Text> */}
+        </TouchableOpacity>
 
-    </View>
+      </View>
 
-   
 
-     
+      {/* Inicio de ActionSheet */}
+      <Center>
+        {/* <Button onPress={onOpen}>Actionsheet</Button> */}
+        <Actionsheet isOpen={isOpen} onClose={onClose}>
+          <Actionsheet.Content>
+            <Box w="100%" h={60} px={4} justifyContent="center" >
+              <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                Bienvenido: {user?.nombre} {user?.apellido} 😊
+              </Text>
+            </Box>
+
+            <Actionsheet.Item onPress={handleSub}>
+              Suscríbete
+            </Actionsheet.Item>
+
+            {/* <Actionsheet.Item isDisabled>Share</Actionsheet.Item>
+            <Actionsheet.Item >
+              <Text style={{ color: '#FFA3A2', fontSize: 16, margin: 0, }}>Favourite</Text>
+            </Actionsheet.Item> */}
+
+            <Actionsheet.Item onPress={handleLogOut} >
+              <Text style={{ color: '#FF4659', fontSize: 16, margin: 0, }}>Cerrar Sesión</Text>
+            </Actionsheet.Item>
+            <Actionsheet.Item onPress={() => onClose()} >Cancel</Actionsheet.Item>
+          </Actionsheet.Content>
+        </Actionsheet>
+      </Center>
+      {/* Fin de ActionSheet */}
+
+
+
+
       {/* <Text 
         style={styles.instructions}
         >
@@ -126,7 +173,8 @@ const styles = StyleSheet.create({
   containerButtons: {
     width: 115,
     alignSelf: 'flex-end',
-    right: 15,
+    // right: 15,
+    top: -40,
   },
   buttonExited: {
     backgroundColor: '#F1FCFF', //#F1FCFF
