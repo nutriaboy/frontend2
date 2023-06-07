@@ -8,6 +8,7 @@ import { RegisterScreen } from '../screens/RegisterScreen';
 import { LoadingScreen } from '../screens/LoadingScreen';
 import TabsAndroid from './Tabs';
 import { SubscriptionScreen } from '../screens/SubscriptionScreen';
+import { ProfileSubScreen } from '../screens/ProfileSubScreen';
 // import TabsAndroid, { Tabs } from './Tabs';
 
 const Stack = createStackNavigator();
@@ -42,6 +43,7 @@ export const StackNav = () => {
                         <>
                             <Stack.Screen name="Tabs" component={TabsAndroid} />
                             <Stack.Screen name="SubscriptionScreen" component={SubscriptionScreen} />
+                            <Stack.Screen name="ProfileSubScreen" component={ProfileSubScreen} />
                         </>
                     )
             }

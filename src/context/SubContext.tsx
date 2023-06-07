@@ -4,17 +4,11 @@ import { EditData } from '../interfaces/loginInterfaces';
 import connectionApi from '../api/ConnectionApi';
 
 type AuthContextProps = {
-    // errorMessage: string;
-    // token: string | null;
-    // user: Usuario | null;
-    // logged: boolean;
-    // status: 'checking' | 'authenticated' | 'not_authenticated';
-    // singUp: (registerData: RegisterData) => void;
-    // singIn: (loginData: LoginData) => void;
-    // logOut: () => void;
-    // editUser: (rest_0: EditData) => Promise<void>
-    // removeError: () => void;
-    createSub: (data: any) => Promise<void>
+    subscription: {};
+    isSubscriber: boolean;
+    errorMessage: string;
+    createSub: (data: any) => Promise<void>;
+    obtenerSubById: (usuario: string) => Promise<void>;
 }
 
 export const SubContext = createContext({} as AuthContextProps);
@@ -22,6 +16,8 @@ export const SubContext = createContext({} as AuthContextProps);
 
 const initialState = {
     subscription: {},
+    isSubscriber: false,
+    errorMessage: '',
 
 }
 
@@ -35,24 +31,37 @@ export const SubProvider = ({ children }: any) => {
         try {
             const { id, telefono, ciudad, direccion, genero } = dataSub;
             createSubscriptionUser({ id, telefono, ciudad, direccion, genero });
-            
-            const { data } = await connectionApi.post('/suscriptores', { usuario:id });
+
+            const { data } = await connectionApi.post('/suscriptores', { usuario: id });
 
             if (data.ok) {
-                setSubState({...subState, subscription: data.suscriptor });
+                setSubState({ ...subState, subscription: data.suscriptor });
             }
 
 
-
-        } catch (error) {
+        } catch (error: any) {
             console.log(error);
         }
+    }
+
+    const obtenerSubById = async (usuario: string) => {
+        try {
+            const {data} = await connectionApi.get(`/suscriptores/${usuario}`);
+            setSubState({...subState, subscription: data.suscriptor, isSubscriber: true });
+
+
+        } catch (error: any) {
+            console.log(error);
+            setSubState({ ...subState, errorMessage: error.response.data.msg || 'Revisar la información', isSubscriber: false });
+        }
+
     }
 
     return (
         <SubContext.Provider value={{
             ...subState,
-            createSub
+            createSub,
+            obtenerSubById
         }}>
             {children}
         </SubContext.Provider>

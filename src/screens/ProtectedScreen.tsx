@@ -1,23 +1,30 @@
-import React, { useContext } from 'react'
-import { View, Text, StyleSheet, Alert } from 'react-native';
-import { AuthContext } from '../context/AuthContext';
-import { BeerItem } from '../components/BeerItem';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import React, { useContext, useEffect } from 'react'
+import { View, Text, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import { Actionsheet, Box, Button, Center, useDisclose } from "native-base";
 import { CommonActions, useNavigation } from '@react-navigation/native';
+
+import { AuthContext } from '../context/AuthContext';
+import { SubContext } from '../context/SubContext';
+import { BeerItem } from '../components/BeerItem';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 
 
-import { Actionsheet, Box, Button, Center, useDisclose } from "native-base";
 
 export const ProtectedScreen = () => {
 
   const { user, token, logOut } = useContext(AuthContext);
+  const {obtenerSubById, isSubscriber} = useContext(SubContext)
 
   const navigator = useNavigation();
-
-
+  
   const { isOpen, onOpen, onClose } = useDisclose();
 
+
+  useEffect(() => {
+    obtenerSubById(user!.uid);
+  }, [])
+  
 
   const handleLogOut = () => {
     onClose();
@@ -32,7 +39,7 @@ export const ProtectedScreen = () => {
       }]);
   }
 
-  const handleSub = () => {
+  const handleNewSub = () => {
     onClose();
     navigator.dispatch(
       CommonActions.navigate({
@@ -41,10 +48,16 @@ export const ProtectedScreen = () => {
     )
   }
 
-  // const onOpen = () => { 
-  //   console.log('hola')  
-  // }
+  const handleSub = () => {
+    onClose();
+    navigator.dispatch(
+      CommonActions.navigate({
+        name: 'ProfileSubScreen',
+      })
+    )
+  }
 
+  
 
 
   return (
@@ -85,9 +98,18 @@ export const ProtectedScreen = () => {
               </Text>
             </Box>
 
-            <Actionsheet.Item onPress={handleSub}>
-              Suscríbete
-            </Actionsheet.Item>
+            {
+              isSubscriber ? (
+              <Actionsheet.Item onPress={handleNewSub}>
+                Suscríbete! 
+              </Actionsheet.Item>
+              ) : (
+              <Actionsheet.Item onPress={handleSub}>
+                Suscripción
+              </Actionsheet.Item>
+              )
+              
+            }
 
             {/* <Actionsheet.Item isDisabled>Share</Actionsheet.Item>
             <Actionsheet.Item >

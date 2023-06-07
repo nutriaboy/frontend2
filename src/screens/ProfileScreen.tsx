@@ -193,11 +193,14 @@ export const ProfileScreen = () => {
                             <TextInput
                                 placeholder='Ingresar Correo'
                                 placeholderTextColor="rgba(0,0,0,0.4)"
-                                style={styles.inputField}
+                                style={{...styles.inputField, 
+                                    color: "rgba(0,0,0,0.4)",
+                                    borderBottomColor: "rgba(0,0,0,0.4)"
+                                }}
                                 selectionColor="black"
                                 onChangeText={(value) => onChange(value, 'correo')}
                                 value={correo}
-                                // onSubmitEditing={  }
+                                editable={false}
                                 autoCapitalize='none'
                                 autoCorrect={false}
                             />
@@ -207,10 +210,14 @@ export const ProfileScreen = () => {
                             <TextInput
                                 placeholder='Ingresar Rut'
                                 placeholderTextColor="rgba(0,0,0,0.4)"
-                                style={styles.inputField}
+                                style={{...styles.inputField, 
+                                    color: "rgba(0,0,0,0.4)",
+                                    borderBottomColor: "rgba(0,0,0,0.4)"
+                                }}
                                 selectionColor="black"
                                 onChangeText={(value) => onChange(value, 'rut')}
                                 value={rut}
+                                editable={false}
                                 // onSubmitEditing={  }
                                 autoCapitalize='none'
                                 autoCorrect={false}
