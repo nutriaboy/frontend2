@@ -99,7 +99,7 @@ export const ProtectedScreen = () => {
             </Box>
 
             {
-              isSubscriber ? (
+              (!isSubscriber) ? (
               <Actionsheet.Item onPress={handleNewSub}>
                 Suscríbete! 
               </Actionsheet.Item>

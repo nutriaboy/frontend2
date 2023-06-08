@@ -21,6 +21,7 @@ type AuthContextProps = {
     removeError: () => void;
 }
 
+
 const authInitialState: AuthState = {
     status: 'checking',
     logged: false,
