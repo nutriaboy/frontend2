@@ -5,29 +5,33 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { useForm } from '../hooks/useFrome';
 import { AuthContext } from '../context/AuthContext';
 import { SubContext } from '../context/SubContext';
+import { Box, CheckIcon, Select } from 'native-base';
 
 interface Props extends StackScreenProps<any, any> { };
 
 //TODO: Crear alertas de errores
 export const SubscriptionScreen = ({ navigation }: Props) => {
 
-    const {user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const { createSub } = useContext(SubContext);
 
-    const { telefono, ciudad, direccion, genero, onChange } = useForm({
-        telefono:  user?.telefono  || '',
-        ciudad:    user?.ciudad    || '',
+    const { telefono, ciudad, direccion, onChange } = useForm({
+        telefono: user?.telefono || '',
+        ciudad: user?.ciudad || '',
         direccion: user?.direccion || '',
-        genero:    user?.genero    || ''
+        // genero: user?.genero || ''
     });
     const [isVisible, setIsVisible] = useState(false);
 
-    
+    const [genderOption, setGenderOption] = useState({genero: user?.genero || ''});
+    const {genero}  = genderOption;
+
+
 
 
     const PayAndSub = () => {
         const id = user!.uid;
-        createSub({id, telefono, ciudad, direccion, genero});
+        createSub({ id, telefono, ciudad, direccion, genero });
         // console.log({telefono, ciudad, direccion, genero})
         setIsVisible(!isVisible);
         navigation.pop()
@@ -35,7 +39,7 @@ export const SubscriptionScreen = ({ navigation }: Props) => {
 
 
     const todoOk = () => {
-        return (telefono.length > 1 && ciudad.length > 1 && direccion.length > 1 && genero.length >= 1) ? true : false;
+        return (telefono.length > 1 && ciudad.length > 1 && direccion.length > 1 && genero !== '') ? true : false;
     }
 
     return (
@@ -103,8 +107,8 @@ export const SubscriptionScreen = ({ navigation }: Props) => {
                 />
 
                 {/*Input genero*/}
-                <Text style={loginStyles.label}>Genero: </Text>
-                <TextInput
+                <Text style={{...loginStyles.label, marginBottom: 7}}>Genero: </Text>
+                {/* <TextInput
                     placeholder='Ingrese su Genero'
                     placeholderTextColor="rgba(255,255,255,0.4)"
                     underlineColorAndroid='white'
@@ -118,11 +122,46 @@ export const SubscriptionScreen = ({ navigation }: Props) => {
                     // onSubmitEditing={ onRegister }
                     autoCapitalize='words'
                     autoCorrect={false}
-                />
+                /> */}
+
+
+
+                <Box
+                    w="3/4"
+                    maxW="600"
+                >
+                    <Select
+                        selectedValue={genero}
+                        bgColor='violet.50'
+                        minWidth="300"
+                        accessibilityLabel="Elija su Genero"
+                        fontSize="lg"
+                        placeholder="Elija su Genero"
+                        _selectedItem={{
+                            bg: "teal.600",
+                            endIcon: <CheckIcon size="5" />
+                        }}
+                        mt={1}
+                        onValueChange={itemValue => setGenderOption({ genero: itemValue })}
+                    >
+
+                        <Select.Item
+                            label={"Masculino"}
+                            value={"M"}
+                        />
+                        <Select.Item
+                            label={"Femenino"}
+                            value={"F"}
+                        />
+
+                    </Select>
+                </Box>
+
+
 
                 <TouchableOpacity
                     activeOpacity={0.8}
-                    onPress={()=> setIsVisible(!isVisible)}
+                    onPress={() => setIsVisible(!isVisible)}
                     style={
                         (todoOk()) ?
                             { ...loginStyles.button, borderRadius: 5, marginTop: 20, backgroundColor: "#C32BF0", borderColor: "#C32BF0" }
@@ -248,14 +287,14 @@ export const stylesSub = StyleSheet.create({
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
-          width: 0,
-          height: 3
+            width: 0,
+            height: 3
         },
         shadowOpacity: 0.27,
         elevation: 6
-      },
-      buttonText: {
+    },
+    buttonText: {
         color: 'white',
         fontSize: 18
-      },
+    },
 })
