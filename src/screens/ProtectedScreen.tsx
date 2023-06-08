@@ -119,7 +119,7 @@ export const ProtectedScreen = () => {
             <Actionsheet.Item onPress={handleLogOut} >
               <Text style={{ color: '#FF4659', fontSize: 16, margin: 0, }}>Cerrar Sesión</Text>
             </Actionsheet.Item>
-            <Actionsheet.Item onPress={() => onClose()} >Cancel</Actionsheet.Item>
+            <Actionsheet.Item onPress={() => onClose()} >Cancelar</Actionsheet.Item>
           </Actionsheet.Content>
         </Actionsheet>
       </Center>

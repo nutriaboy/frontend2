@@ -85,9 +85,9 @@ export const SubscriptionScreen = ({ navigation }: Props) => {
                 />
 
                 {/*Input direccion*/}
-                <Text style={loginStyles.label}>Direccion: </Text>
+                <Text style={loginStyles.label}>Dirección: </Text>
                 <TextInput
-                    placeholder='Ingrese su Direccion'
+                    placeholder='Ingrese su Dirección'
                     placeholderTextColor="rgba(255,255,255,0.4)"
                     underlineColorAndroid='white'
                     style={[
