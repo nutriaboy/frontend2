@@ -24,9 +24,10 @@ export const BeerCartProvider = ({ children }: any) => {
     const obtenerCervezas = async () => {
         const { data } = await connectionApi.get('/cervezas?limite=100');
         if(data.ok) {
+            const cervezas = data.cervezas.filter((cerveza: Cerveza) => (cerveza.stock !== 0)? true : false); 
             dispatch({
                 type: 'getCervezas',
-                payload: data.cervezas
+                payload: cervezas
             })
         }
     };
