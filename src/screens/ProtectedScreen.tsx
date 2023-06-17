@@ -5,7 +5,7 @@ import { CommonActions, useNavigation } from '@react-navigation/native';
 
 import { AuthContext } from '../context/AuthContext';
 import { SubContext } from '../context/SubContext';
-import { BeerItem, dataCerveza } from '../components/BeerItem';
+import { BeerItem } from '../components/BeerItem';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import { BeerCartContext } from '../context/BeerCartContext';
@@ -164,17 +164,7 @@ export const ProtectedScreen = () => {
           renderItem={({item}) => <BeerItem data={item} />}
 
         />
-        {/* <BeerItem />
-        <BeerItem />
-        <BeerItem />
-        <BeerItem />
-        <BeerItem />
-        <BeerItem />
-        <BeerItem />
-        <BeerItem />
-        <BeerItem />
-        <BeerItem />
-        <BeerItem /> */}
+        
 
       </View>
 

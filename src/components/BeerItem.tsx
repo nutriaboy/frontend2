@@ -1,20 +1,31 @@
 import React from 'react'
+import { CommonActions, useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native';
 import { View, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Text } from 'react-native-paper';
-import { Cerveza } from '../interfaces/beerCartInterfaces';
 
 const uri = 'https://chambriao.cl/wp-content/uploads/2021/08/Cruz-de-Malta-GOLDEN-ALE-1.jpg';
 
 
 export const BeerItem = ({data}: any) => {
 
+  const navigator = useNavigation();
+
+  const onPress = () => {
+    navigator.dispatch(
+      CommonActions.navigate({
+        name: 'CervezaScreen',
+        params: {data}
+      })
+    )
+  }
 
   return (
     <TouchableOpacity
       activeOpacity={0.85}
       style={styles.card}
+      onPress={onPress} 
 
     >
       <Image
