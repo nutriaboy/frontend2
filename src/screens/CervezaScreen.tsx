@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { loginStyles } from '../theme/loginStyles'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -13,8 +13,12 @@ const uri = 'https://chambriao.cl/wp-content/uploads/2021/08/Cruz-de-Malta-GOLDE
 export const CervezaScreen = ({ route }: any) => {
   const { data } = route.params
 
+  const [countStock, setCountStock] = useState(1);
+
   const navigator = useNavigation();
-  // console.log(data);
+
+
+
 
   const onPress = () => {
     navigator.dispatch(
@@ -23,6 +27,21 @@ export const CervezaScreen = ({ route }: any) => {
       })
     )
   }
+
+  const restStock = () => { 
+    if (countStock > 1) {
+      setCountStock(countStock - 1)
+    }  
+  }
+
+  const addCart = () => {
+
+    console.log(data.id, countStock);
+    onPress();
+
+  }
+
+
 
   return (
     <View style={{ flex: 1, backgroundColor: '#7764E3' }}>
@@ -78,6 +97,51 @@ export const CervezaScreen = ({ route }: any) => {
           </Text>
         </View>
 
+
+        <View
+          style={styles.containerButton}
+        >
+
+          <View style={{ flexDirection: 'row', marginBottom: 10, backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, }}>
+
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={styles.buttonsStocking}
+              onPress={restStock}
+            >
+              <Text style={styles.buttonText}>
+                -
+              </Text>
+            </TouchableOpacity>
+
+            <Text style={{ ...styles.buttonText, paddingLeft: 10, paddingRight: 10 }}>
+              {countStock}
+            </Text>
+
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={styles.buttonsStocking}
+              onPress={()=> setCountStock(countStock + 1 )}
+            >
+              <Text style={styles.buttonText}>
+                +
+              </Text>
+            </TouchableOpacity>
+
+          </View>
+
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={{ ...styles.button }}
+            onPress={addCart}
+          >
+            <Text style={styles.buttonText}>
+              Añadir al Carro
+            </Text>
+          </TouchableOpacity>
+        </View>
+
       </View>
     </View>
   )
@@ -103,12 +167,11 @@ const styles = StyleSheet.create({
   containerText: {
     marginTop: 25,
     width: '100%',
-    height: 300,
+    height: 250,
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
     borderRadius: 40,
     justifyContent: 'space-around',
     textAlign: 'center',
-
 
   },
   textData: {
@@ -118,5 +181,34 @@ const styles = StyleSheet.create({
     color: 'black',
 
   },
+  containerButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+    width: '100%',
+  },
+  button: {
+    backgroundColor: 'white',
+    width: 330,
+    height: 50,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+
+  },
+  buttonText: {
+    fontSize: 18,
+    color: '#1c1c1c',
+    fontWeight: 'bold',
+
+  },
+  buttonsStocking: {
+    backgroundColor: 'white',
+    width: 30,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+  }
 
 })
