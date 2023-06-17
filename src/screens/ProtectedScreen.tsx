@@ -1,30 +1,35 @@
 import React, { useContext, useEffect } from 'react'
-import { View, Text, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Alert, TouchableOpacity, FlatList } from 'react-native';
 import { Actionsheet, Box, Button, Center, useDisclose } from "native-base";
 import { CommonActions, useNavigation } from '@react-navigation/native';
 
 import { AuthContext } from '../context/AuthContext';
 import { SubContext } from '../context/SubContext';
-import { BeerItem } from '../components/BeerItem';
+import { BeerItem, dataCerveza } from '../components/BeerItem';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import { BeerCartContext } from '../context/BeerCartContext';
+import { Cerveza } from '../interfaces/beerCartInterfaces';
 
 
 
 export const ProtectedScreen = () => {
 
   const { user, token, logOut } = useContext(AuthContext);
-  const {obtenerSubById, isSubscriber} = useContext(SubContext)
+  const { obtenerSubById, isSubscriber } = useContext(SubContext);
+  const { obtenerCervezas, cervezas } = useContext(BeerCartContext);
+
 
   const navigator = useNavigation();
-  
+
   const { isOpen, onOpen, onClose } = useDisclose();
 
 
   useEffect(() => {
     obtenerSubById(user!.uid);
+    obtenerCervezas();
   }, [])
-  
+
 
   const handleLogOut = () => {
     onClose();
@@ -60,6 +65,7 @@ export const ProtectedScreen = () => {
   
 
 
+
   return (
     <View style={styles.container}>
 
@@ -76,9 +82,9 @@ export const ProtectedScreen = () => {
 
         <TouchableOpacity
           activeOpacity={0.5}
-          style={{...styles.buttonSub, left: 50 }}
+          style={{ ...styles.buttonSub, left: 50 }}
           onPress={onOpen}
-          // onPress={handleSub}
+        // onPress={handleSub}
         >
           <Icon name="menu" size={40} />
           {/* <Text style={styles.textButtonSub}>Suscríbete </Text> */}
@@ -93,22 +99,22 @@ export const ProtectedScreen = () => {
         <Actionsheet isOpen={isOpen} onClose={onClose}>
           <Actionsheet.Content>
             <Box w="100%" h={60} px={4} justifyContent="center" >
-              <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
                 Bienvenido: {user?.nombre} {user?.apellido} 😊
               </Text>
             </Box>
 
             {
               (!isSubscriber) ? (
-              <Actionsheet.Item onPress={handleNewSub}>
-                Suscríbete! 
-              </Actionsheet.Item>
+                <Actionsheet.Item onPress={handleNewSub}>
+                  Suscríbete!
+                </Actionsheet.Item>
               ) : (
-              <Actionsheet.Item onPress={handleSub}>
-                Suscripción
-              </Actionsheet.Item>
+                <Actionsheet.Item onPress={handleSub}>
+                  Suscripción
+                </Actionsheet.Item>
               )
-              
+
             }
 
             {/* <Actionsheet.Item isDisabled>Share</Actionsheet.Item>
@@ -145,6 +151,20 @@ export const ProtectedScreen = () => {
         />  */}
 
       <View style={styles.cards}>
+        <FlatList
+          contentContainerStyle={{
+            padding: 5
+          }}
+          //   flexDirection: "row",
+          //   // alignItems: "flex-start",
+          // flexWrap: "wrap",
+          numColumns={2}
+          data={cervezas}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => <BeerItem data={item} />}
+
+        />
+        {/* <BeerItem />
         <BeerItem />
         <BeerItem />
         <BeerItem />
@@ -154,8 +174,7 @@ export const ProtectedScreen = () => {
         <BeerItem />
         <BeerItem />
         <BeerItem />
-        <BeerItem />
-        <BeerItem />
+        <BeerItem /> */}
 
       </View>
 

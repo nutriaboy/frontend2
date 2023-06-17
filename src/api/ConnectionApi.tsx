@@ -1,8 +1,8 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-const baseURL = 'https://backend1-production-d1de.up.railway.app/api';
+//'https://backend1-production-d1de.up.railway.app/api' 
+const baseURL = 'http://192.168.1.84:8080/api';
 
 const connectionApi = axios.create({ baseURL });
 
