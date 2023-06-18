@@ -1,17 +1,20 @@
 import React, { createContext, useReducer } from 'react'
-import { Cerveza } from '../interfaces/beerCartInterfaces';
+import { Cerveza, beerCart } from '../interfaces/beerCartInterfaces';
 import { BeerCartState, beerCartReducer } from '../reducers/beerCartReducer';
 import connectionApi from '../api/ConnectionApi';
 
 type BeerCartContextProps = {
     cervezas: Cerveza[] | null;
+    beerCart: beerCart[] | [];
     errorMessage: string;
     obtenerCervezas: () => Promise<void>
+    beerWarehouse: (...rest: any) => void
 
 }
 
 const BeerCartInitialState: BeerCartState = {
     cervezas: null,
+    beerCart: [],
     errorMessage: '',
 }
 
@@ -23,8 +26,8 @@ export const BeerCartProvider = ({ children }: any) => {
 
     const obtenerCervezas = async () => {
         const { data } = await connectionApi.get('/cervezas?limite=100');
-        if(data.ok) {
-            const cervezas = data.cervezas.filter((cerveza: Cerveza) => (cerveza.stock !== 0)? true : false); 
+        if (data.ok) {
+            const cervezas = data.cervezas.filter((cerveza: Cerveza) => (cerveza.stock !== 0) ? true : false);
             dispatch({
                 type: 'getCervezas',
                 payload: cervezas
@@ -32,10 +35,23 @@ export const BeerCartProvider = ({ children }: any) => {
         }
     };
 
+    const beerWarehouse = (...rest: any) => {
+        const data = rest[0]
+
+        const validarExistencia = stateBeer.beerCart.find(({id}) => id == data.id );
+
+        (validarExistencia)
+            ? dispatch({ type: 'updateBeerWarehouse', payload: data})
+            : dispatch({ type: 'beerWarehouse', payload: data })
+
+            
+    }
+
     return (
         <BeerCartContext.Provider value={{
             ...stateBeer,
             obtenerCervezas,
+            beerWarehouse,
         }}>
             {children}
         </BeerCartContext.Provider>

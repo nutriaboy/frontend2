@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { loginStyles } from '../theme/loginStyles'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { CommonActions, useNavigation } from '@react-navigation/native'
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import { BeerCartContext } from '../context/BeerCartContext';
 
 
 const uri = 'https://chambriao.cl/wp-content/uploads/2021/08/Cruz-de-Malta-GOLDEN-ALE-1.jpg';
@@ -13,6 +14,7 @@ const uri = 'https://chambriao.cl/wp-content/uploads/2021/08/Cruz-de-Malta-GOLDE
 export const CervezaScreen = ({ route }: any) => {
   const { data } = route.params
 
+  const {beerWarehouse} = useContext(BeerCartContext);
   const [countStock, setCountStock] = useState(1);
 
   const navigator = useNavigation();
@@ -28,6 +30,11 @@ export const CervezaScreen = ({ route }: any) => {
     )
   }
 
+  const addStock = () => {
+
+    if (countStock < data.stock) setCountStock(countStock + 1 );
+  }
+
   const restStock = () => { 
     if (countStock > 1) {
       setCountStock(countStock - 1)
@@ -36,7 +43,10 @@ export const CervezaScreen = ({ route }: any) => {
 
   const addCart = () => {
 
-    console.log(data.id, countStock);
+    const { tipoCerveza } =  data.tipoCerveza.nombre
+    const {id, precioUnit, stock, nombre, marca } = data
+
+    beerWarehouse({id, cantidad: countStock, precioUnit, stock, nombre, tipoCerveza, marca});
     onPress();
 
   }
@@ -93,7 +103,7 @@ export const CervezaScreen = ({ route }: any) => {
             Tipo Cerveza: {data.tipoCerveza.nombre}
           </Text>
           <Text style={styles.textData}>
-            stock: {data.stock}
+            Disponiblidad: {data.stock}
           </Text>
         </View>
 
@@ -121,7 +131,7 @@ export const CervezaScreen = ({ route }: any) => {
             <TouchableOpacity
               activeOpacity={0.8}
               style={styles.buttonsStocking}
-              onPress={()=> setCountStock(countStock + 1 )}
+              onPress={addStock}
             >
               <Text style={styles.buttonText}>
                 +

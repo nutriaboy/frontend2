@@ -20,3 +20,11 @@ export interface TipoCerveza {
     _id:    string;
     nombre: string;
 }
+
+
+export interface beerCart{
+    id: string;
+    cantidad: number;
+    precio: number;
+    stock: number;
+}
