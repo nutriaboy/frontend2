@@ -79,14 +79,7 @@ export const ProtectedScreen = () => {
       <Text style={styles.title}>Cervezas</Text>
 
       <View style={styles.containerButtons}>
-        {/* <TouchableOpacity
-          activeOpacity={0.5}
-          style={styles.buttonExited}
-          onPress={handleLogOut}
-        >
-          <Text style={styles.textButtonExited}>Cerrar Sesión</Text>
-        </TouchableOpacity> */}
-
+      
         <TouchableOpacity
           activeOpacity={0.5}
           style={{ ...styles.buttonSub, left: 50 }}
@@ -107,7 +100,7 @@ export const ProtectedScreen = () => {
           <Actionsheet.Content>
             <Box w="100%" h={60} px={4} justifyContent="center" >
               <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
-                Bienvenido: {user?.nombre} {user?.apellido} 😊
+              {(user?.genero === 'F') ? "Bienvenida: " : "Bienvenido: "} {user?.nombre} {user?.apellido} 😊
               </Text>
             </Box>
 
@@ -138,24 +131,6 @@ export const ProtectedScreen = () => {
       </Center>
       {/* Fin de ActionSheet */}
 
-
-
-
-      {/* <Text 
-        style={styles.instructions}
-        >
-          { JSON.stringify( user, null, 5 )}
-        </Text>
-        <Text
-          style={styles.instructions}
-        >
-          { token}
-        </Text>
-         <Button 
-          title="Log Out"
-          color="#841584"
-          onPress={logOut}
-        />  */}
 
       <View style={styles.cards}>
         <FlatList
@@ -190,15 +165,17 @@ export const ProtectedScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'white',
   },
   title: {
     fontSize: 30,
     fontWeight: 'bold',
     color: 'black',
-    margin: 10,
-    top: 80,
-    left: 30,
+    margin: 8,
+    top: 15,
+    paddingLeft: 16,
+
+    // left: 30,
   },
   instructions: {
     color: '#333333',
@@ -206,12 +183,12 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   cards: {
-    top: '10%',
+    top: '0%',
     borderTopWidth: 2,
     borderTopColor: 'rgba(238, 238, 238, 0.8)',
     // marginLeft: '0%',
     width: '100%',
-    height: '100%',
+    height: '85%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -222,6 +199,7 @@ const styles = StyleSheet.create({
     width: 115,
     alignSelf: 'flex-end',
     top: -40,
+    
   },
   buttonExited: {
     backgroundColor: '#F1FCFF', //#F1FCFF
@@ -238,7 +216,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   buttonSub: {
-    backgroundColor: '#F1FCFF', //#F1FCFF
+    // backgroundColor: '#F1FCFF', //#F1FCFF
     borderRadius: 10,
     borderColor: 'black',
     // borderWidth: 1,

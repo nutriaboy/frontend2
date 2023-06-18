@@ -25,6 +25,6 @@ export interface TipoCerveza {
 export interface beerCart{
     id: string;
     cantidad: number;
-    precio: number;
+    precioUnit: number;
     stock: number;
 }

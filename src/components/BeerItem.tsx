@@ -11,6 +11,8 @@ const uri = 'https://chambriao.cl/wp-content/uploads/2021/08/Cruz-de-Malta-GOLDE
 export const BeerItem = ({data}: any) => {
 
   const navigator = useNavigation();
+  const formatoChileno = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' });
+
 
   const onPress = () => {
     navigator.dispatch(
@@ -33,7 +35,8 @@ export const BeerItem = ({data}: any) => {
         source={{ uri }}
       />
       <View style={styles.sectionText}>
-        <Text style={styles.beerText}>{data.nombre} - {data.marca}</Text>
+        <Text style={styles.beerText}>{formatoChileno.format(data.precioUnit)}</Text>
+        <Text style={{...styles.beerText, fontSize: 17}}>{data.nombre} - {data.marca}</Text>
       </View>
     </TouchableOpacity>
   )
@@ -46,7 +49,7 @@ const styles = StyleSheet.create({
 
   card: {
     width: 190,
-    height: 190,
+    height: 300,
     marginBottom: 10,
     marginLeft: 2,
     marginRight: 2,

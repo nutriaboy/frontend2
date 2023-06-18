@@ -48,12 +48,10 @@ export const BeerCartProvider = ({ children }: any) => {
     }
 
     const updateAmountBeerWarehouse = (cantidad: number, idBeer: string) => {
-        console.log(cantidad, idBeer)
         dispatch({type: 'updateAmountBeer', payload: { idBeer, cantidad }});
     }
 
     const deleteBeerWarehouse = (idBeer: string) => {
-        console.log(idBeer)
         dispatch({ type: 'deleteBeerWarehouse', payload: idBeer});
     }
 
