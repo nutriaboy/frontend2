@@ -16,7 +16,7 @@ export const ProtectedScreen = () => {
 
   const { user, token, logOut } = useContext(AuthContext);
   const { obtenerSubById, isSubscriber } = useContext(SubContext);
-  const { obtenerCervezas, cervezas } = useContext(BeerCartContext);
+  const { obtenerCervezas, cervezas, cleaningBeerWarehouse } = useContext(BeerCartContext);
   const [refreshing, setRefreshing] = useState(false);
 
 
@@ -41,7 +41,7 @@ export const ProtectedScreen = () => {
       },
       {
         text: 'OK',
-        onPress: () => logOut()
+        onPress: () => (logOut(), cleaningBeerWarehouse())
       }]);
   }
 

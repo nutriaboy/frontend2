@@ -79,7 +79,7 @@ export const ProfileScreen = () => {
                     underlineColorAndroid='rgb(119,100,227)'
                     editable={false}
                     style={[
-                        loginStyles.inputField, { color: "rgb(119,100,227)" },
+                        loginStyles.inputField, { color: "rgb(0,0,0)" },
                         (Platform.OS === 'ios') && loginStyles.inputFieldIOS
                     ]}
                     selectionColor="white"
@@ -94,7 +94,7 @@ export const ProfileScreen = () => {
                     underlineColorAndroid='rgb(119,100,227)'
                     editable={false}
                     style={[
-                        loginStyles.inputField, { color: "rgb(119,100,227)" },
+                        loginStyles.inputField, { color: "rgb(0,0,0)" },
                         (Platform.OS === 'ios') && loginStyles.inputFieldIOS
                     ]}
                     selectionColor="white"
@@ -109,7 +109,7 @@ export const ProfileScreen = () => {
                     underlineColorAndroid='rgb(119,100,227)'
                     editable={false}
                     style={[
-                        loginStyles.inputField, { color: "rgb(119,100,227)" },
+                        loginStyles.inputField, { color: "rgb(0,0,0)" },
                         (Platform.OS === 'ios') && loginStyles.inputFieldIOS
                     ]}
                     selectionColor="white"
@@ -124,7 +124,7 @@ export const ProfileScreen = () => {
                     underlineColorAndroid='rgb(119,100,227)'
                     editable={false}
                     style={[
-                        loginStyles.inputField, { color: "rgb(119,100,227)" },
+                        loginStyles.inputField, { color: "rgb(0,0,0)" },
                         (Platform.OS === 'ios') && loginStyles.inputFieldIOS
                     ]}
                     selectionColor="white"

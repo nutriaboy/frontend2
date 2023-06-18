@@ -14,6 +14,7 @@ type BeerCartAction =
     | { type: 'updateBeerWarehouse', payload: any }
     | { type: 'updateAmountBeer', payload: { idBeer: string, cantidad: number } }
     | { type: 'deleteBeerWarehouse', payload: string }
+    | { type: 'cleaningBeerWarehouse'}
 
 
 export const beerCartReducer = (state: BeerCartState, action: BeerCartAction): BeerCartState => {
@@ -76,6 +77,12 @@ export const beerCartReducer = (state: BeerCartState, action: BeerCartAction): B
                         }
                     }
                 )
+            }
+        
+        case 'cleaningBeerWarehouse':
+            return { 
+                ...state,
+                beerCart: []
             }
 
         default:

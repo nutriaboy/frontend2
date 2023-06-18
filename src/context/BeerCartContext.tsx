@@ -7,10 +7,11 @@ type BeerCartContextProps = {
     cervezas: Cerveza[] | null;
     beerCart: beerCart[] | [];
     errorMessage: string;
-    obtenerCervezas: () => Promise<void>
-    beerWarehouse: (...rest: any) => void
-    updateAmountBeerWarehouse: (cantidad: number, idBeer: string) => void
-    deleteBeerWarehouse: (idBeer: string) => void
+    obtenerCervezas: () => Promise<void>;
+    beerWarehouse: (...rest: any) => void;
+    updateAmountBeerWarehouse: (cantidad: number, idBeer: string) => void;
+    deleteBeerWarehouse: (idBeer: string) => void;
+    cleaningBeerWarehouse: () => void;
 
 }
 
@@ -55,6 +56,10 @@ export const BeerCartProvider = ({ children }: any) => {
         dispatch({ type: 'deleteBeerWarehouse', payload: idBeer});
     }
 
+    const cleaningBeerWarehouse = () => {
+        dispatch({ type: 'cleaningBeerWarehouse'});
+    }
+
         return (
             <BeerCartContext.Provider value={{
                 ...stateBeer,
@@ -62,6 +67,7 @@ export const BeerCartProvider = ({ children }: any) => {
                 beerWarehouse,
                 updateAmountBeerWarehouse,
                 deleteBeerWarehouse,
+                cleaningBeerWarehouse,
             }}>
                 {children}
             </BeerCartContext.Provider>
