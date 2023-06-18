@@ -1,14 +1,19 @@
+import { useContext } from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { Navigator } from './Navigator';
 import { CartScreen } from '../screens/CartScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { DefaultTheme, Provider } from 'react-native-paper';
+import { BeerCartContext } from '../context/BeerCartContext';
 
 
 const Tab = createMaterialBottomTabNavigator();
 
 const Tabs = () => {
+
+    const { beerCart } = useContext(BeerCartContext);
+
     return (
         <Tab.Navigator
             initialRouteName='Home'
@@ -17,7 +22,7 @@ const Tabs = () => {
             barStyle={{ backgroundColor: '#7764E3' }}
             shifting={true}
 
-            // labeled={false} // label is optional 
+        // labeled={false} // label is optional 
 
 
         >
@@ -38,7 +43,7 @@ const Tabs = () => {
                 component={CartScreen}
                 options={{
                     tabBarLabel: 'Carro',
-                    tabBarBadge: 2, // Icono de norificaciones o false
+                    tabBarBadge: ((beerCart.length === 0) ? false : beerCart.length), // Icono de norificaciones o false
                     // tabBarColor: '#009387',
                     tabBarIcon: ({ color }) => (
                         <Icon name="cart" size={30} color={color} />
@@ -66,15 +71,15 @@ const Tabs = () => {
 const theme = {
     ...DefaultTheme,
     colors: {
-      ...DefaultTheme.colors,
-      secondaryContainer: 'transparent', // Use transparent to disable the little highlighting oval
+        ...DefaultTheme.colors,
+        secondaryContainer: 'transparent', // Use transparent to disable the little highlighting oval
     },
-  };
-  
-  export default function TabsAndroid() {
+};
+
+export default function TabsAndroid() {
     return (
-      <Provider theme={theme}>
-        <Tabs />
-      </Provider>
+        <Provider theme={theme}>
+            <Tabs />
+        </Provider>
     );
-  }
+}

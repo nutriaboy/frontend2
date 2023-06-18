@@ -12,6 +12,9 @@ type BeerCartAction =
     | { type: 'getCervezas', payload: any }
     | { type: 'beerWarehouse', payload: any }
     | { type: 'updateBeerWarehouse', payload: any }
+    | { type: 'updateAmountBeer', payload: { idBeer: string, cantidad: number } }
+    | { type: 'deleteBeerWarehouse', payload: string }
+
 
 export const beerCartReducer = (state: BeerCartState, action: BeerCartAction): BeerCartState => {
 
@@ -23,15 +26,36 @@ export const beerCartReducer = (state: BeerCartState, action: BeerCartAction): B
                 cervezas: action.payload
             }
 
+        case 'updateAmountBeer':
+            return {
+                ...state,
+                beerCart: state.beerCart.map(beerCart => {
+                    if (beerCart.id === action.payload.idBeer) {
+                        return beerCart = {
+                            ...beerCart,
+                            cantidad: action.payload.cantidad
+                        }
+
+                    } else { return { ...beerCart } }
+
+
+                }),
+            }
+
+        case 'deleteBeerWarehouse':
+            return {
+                ...state,
+                beerCart: state.beerCart.filter(
+                    beerCart => (beerCart.id === action.payload)
+                        ? false
+                        : true
+                )
+            }
+
         case 'beerWarehouse':
             return {
                 ...state,
                 beerCart: [...state.beerCart, action.payload]
-                // beerCart: state.beerCart.map(
-                //     e => (e.cerveza === action.payload.cerveza)
-                //         ? e.cantidad = e.cantidad + action.payload.cantidad
-                //         : [...state.beerCart, action.payload]
-                // )
             }
 
         case 'updateBeerWarehouse':

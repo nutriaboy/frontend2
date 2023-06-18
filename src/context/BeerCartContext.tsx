@@ -9,6 +9,8 @@ type BeerCartContextProps = {
     errorMessage: string;
     obtenerCervezas: () => Promise<void>
     beerWarehouse: (...rest: any) => void
+    updateAmountBeerWarehouse: (cantidad: number, idBeer: string) => void
+    deleteBeerWarehouse: (idBeer: string) => void
 
 }
 
@@ -38,23 +40,33 @@ export const BeerCartProvider = ({ children }: any) => {
     const beerWarehouse = (...rest: any) => {
         const data = rest[0]
 
-        const validarExistencia = stateBeer.beerCart.find(({id}) => id == data.id );
+        const validarExistencia = stateBeer.beerCart.find(({ id }) => id == data.id);
 
         (validarExistencia)
-            ? dispatch({ type: 'updateBeerWarehouse', payload: data})
+            ? dispatch({ type: 'updateBeerWarehouse', payload: data })
             : dispatch({ type: 'beerWarehouse', payload: data })
-
-            
     }
 
-    return (
-        <BeerCartContext.Provider value={{
-            ...stateBeer,
-            obtenerCervezas,
-            beerWarehouse,
-        }}>
-            {children}
-        </BeerCartContext.Provider>
+    const updateAmountBeerWarehouse = (cantidad: number, idBeer: string) => {
+        console.log(cantidad, idBeer)
+        dispatch({type: 'updateAmountBeer', payload: { idBeer, cantidad }});
+    }
 
-    )
-}
+    const deleteBeerWarehouse = (idBeer: string) => {
+        console.log(idBeer)
+        dispatch({ type: 'deleteBeerWarehouse', payload: idBeer});
+    }
+
+        return (
+            <BeerCartContext.Provider value={{
+                ...stateBeer,
+                obtenerCervezas,
+                beerWarehouse,
+                updateAmountBeerWarehouse,
+                deleteBeerWarehouse,
+            }}>
+                {children}
+            </BeerCartContext.Provider>
+
+        )
+    }

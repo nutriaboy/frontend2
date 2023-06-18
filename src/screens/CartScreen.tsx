@@ -16,7 +16,7 @@ export const CartScreen = () => {
 
   return (
     <View style={styles.container}>
-        <Text style={styles.titulo} >CartScreen</Text>
+        <Text style={styles.titulo} >Carro de Compra</Text>
 
         <FlatList
           
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   titulo: {
+    color: 'black',
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 16,
