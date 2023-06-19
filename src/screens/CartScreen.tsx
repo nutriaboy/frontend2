@@ -1,16 +1,24 @@
 import React, { useState, useContext } from 'react'
-import { View, Text, StyleSheet, FlatList, RefreshControl, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, RefreshControl, TouchableOpacity, Modal, Pressable } from 'react-native';
 import { Cart } from '../components/Cart'
 import { BeerCartContext } from '../context/BeerCartContext';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import { beerCart } from '../interfaces/beerCartInterfaces';
 import { loginStyles } from '../theme/loginStyles';
+import { stylesSub } from './SubscriptionScreen';
+
+
+interface renderItem {
+  item: beerCart
+}
 
 
 export const CartScreen = () => {
 
   const [refreshing, setRefreshing] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const { beerCart } = useContext(BeerCartContext);
 
   const formatoChileno = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' });
@@ -21,6 +29,22 @@ export const CartScreen = () => {
 
     setRefreshing(false);
   }
+
+  const PayBeer = () => {
+    console.log('hola')
+  }
+
+
+  const renderItem = ({ item }: renderItem): any => {
+    return (
+      <View style={{ flexDirection: 'row', height: 30, marginTop: 5, borderBottomColor: 'rgba(0, 0, 0,0.12)',
+      borderBottomWidth: 1, paddingBottom: 2, padding: 1 }}>
+        <Text style={{ fontSize: 20, marginLeft: 10, backgroundColor: 'rgba(120,120,120,0.1)', color: 'black'}}> {item.cantidad} </Text>
+        <Text style={{ fontSize: 20, color: 'black'}}> {item.nombre} - {item.marca} </Text>
+      </View>
+    )
+  }
+
 
 
 
@@ -62,6 +86,7 @@ export const CartScreen = () => {
                 <TouchableOpacity
                   activeOpacity={0.8}
                   style={{ ...loginStyles.button, borderRadius: 5, backgroundColor: "rgb(119,100,227)", borderColor: "rgb(119,100,227)", width: "70%", alignSelf: 'center' }}
+                  onPress={() => setOpenModal(!openModal)}
                 >
                   <Text style={{ ...loginStyles.buttonText, alignSelf: 'center', color: 'white' }}>
                     Pagar
@@ -79,6 +104,113 @@ export const CartScreen = () => {
       }
 
 
+      {/*-----------Modal Inicio----------*/}
+      <Modal
+        animationType='fade'
+        visible={openModal}
+        transparent={true}
+      >
+        <View style={stylesSub.containerModal}>
+          <View style={{ ...stylesSub.modalScreen, height: 500 }}>
+
+            <View style={stylesSub.sectionTitle}>
+              <Text style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                marginLeft: 20,
+                color: 'black'
+              }}>Tu Pedido</Text>
+            </View>
+
+            <View style={styles.sectionContainer}>
+
+              <FlatList
+                data={beerCart}
+                renderItem={renderItem}
+              />
+
+              <View style={{marginBottom: 30}}>
+                <Text style={{fontSize: 30, fontWeight: 'bold'}}>Total: {formatoChileno.format(totalPrice())}</Text>
+              </View>
+
+            </View>
+
+
+
+            <View style={stylesSub.sectionBtn}>
+
+              <Pressable
+                onPress={() => {
+                  setIsVisible(!isVisible);
+                  setOpenModal(!openModal);
+
+                }}
+
+                style={{ ...stylesSub.blackButton, marginBottom: 10, alignSelf: 'center' }}
+              >
+                <Text style={stylesSub.buttonText}>Confirmar</Text>
+              </Pressable>
+
+              <Pressable
+                onPress={() => {
+                  setOpenModal(!openModal);
+                }}
+                style={{ marginBottom: 15 }}
+              >
+                <Text style={{ ...stylesSub.buttonTextModal, alignSelf: 'center' }}>Cancelar</Text>
+              </Pressable>
+            </View>
+
+
+          </View>
+
+        </View>
+      </Modal>
+      {/*-----------Modal Fin----------*/}
+
+      {/*-----------Modal Inicio----------*/}
+      <Modal
+        animationType='fade'
+        visible={isVisible}
+        transparent={true}
+      >
+        <View style={stylesSub.containerModal}>
+          <View style={stylesSub.modalScreen}>
+
+            <View style={stylesSub.sectionTitle}>
+              <Text style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                marginLeft: 20,
+                color: 'black'
+              }}> WebPay</Text>
+            </View>
+
+            <View style={stylesSub.sectionBtn}>
+
+              <Pressable
+                onPress={PayBeer}
+                style={{ ...stylesSub.blackButton, marginBottom: 10, alignSelf: 'center' }}
+              >
+                <Text style={stylesSub.buttonText}>Pagar</Text>
+              </Pressable>
+
+              <Pressable
+                onPress={() => {
+                  setIsVisible(!isVisible);
+                }}
+                style={{ marginBottom: 15 }}
+              >
+                <Text style={{ ...stylesSub.buttonTextModal, alignSelf: 'center' }}>Cancelar</Text>
+              </Pressable>
+            </View>
+
+
+          </View>
+
+        </View>
+      </Modal>
+      {/*-----------Modal Fin----------*/}
 
 
     </View>
@@ -134,6 +266,12 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 25,
     fontWeight: 'bold',
-
+  },
+  sectionContainer: {
+    // backgroundColor: 'red',
+    width: '100%',
+    height: '70%',
+    padding: 10,
+    marginBottom: 20,
   },
 })
