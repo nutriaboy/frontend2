@@ -79,7 +79,6 @@ export const BeerCartProvider = ({ children }: any) => {
 
     const createDetalleVenta =  async(dataDetalleVenta: any) => {
         const { data } = await connectionApi.post('/detalleVentas',  dataDetalleVenta);
-        console.log(data);
         if (data.ok){
             const {detalleVenta} = data;
             dispatch({ type: 'createDetalleVenta', payload: detalleVenta});
