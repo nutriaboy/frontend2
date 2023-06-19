@@ -10,7 +10,7 @@ import TabsAndroid from './Tabs';
 import { SubscriptionScreen } from '../screens/SubscriptionScreen';
 import { ProfileSubScreen } from '../screens/ProfileSubScreen';
 import { CervezaScreen } from '../screens/CervezaScreen';
-// import TabsAndroid, { Tabs } from './Tabs';
+import { ShoppingHistory } from '../screens/ShoppingHistory';
 
 const Stack = createStackNavigator();
 
@@ -46,6 +46,7 @@ export const StackNav = () => {
                             <Stack.Screen name="SubscriptionScreen" component={SubscriptionScreen} />
                             <Stack.Screen name="ProfileSubScreen" component={ProfileSubScreen} />
                             <Stack.Screen name="CervezaScreen" component={CervezaScreen} />
+                            <Stack.Screen name="ShoppingHistory" component={ShoppingHistory} />
                         </>
                     )
             }

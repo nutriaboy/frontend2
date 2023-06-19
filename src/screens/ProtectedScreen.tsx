@@ -57,6 +57,15 @@ export const ProtectedScreen = () => {
     )
   }
 
+  const handleHistory = () => {
+    onClose();
+    navigator.dispatch(
+      CommonActions.navigate({
+        name: 'ShoppingHistory',
+      })
+    )
+  }
+
   const handleSub = () => {
     onClose();
     navigator.dispatch(
@@ -119,11 +128,8 @@ export const ProtectedScreen = () => {
               )
 
             }
+            <Actionsheet.Item onPress={handleHistory} >Historial de Compra</Actionsheet.Item>
 
-            {/* <Actionsheet.Item isDisabled>Share</Actionsheet.Item>
-            <Actionsheet.Item >
-              <Text style={{ color: '#FFA3A2', fontSize: 16, margin: 0, }}>Favourite</Text>
-            </Actionsheet.Item> */}
 
             <Actionsheet.Item onPress={handleLogOut} >
               <Text style={{ color: '#FF4659', fontSize: 16, margin: 0, }}>Cerrar Sesión</Text>
