@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { beerCart } from '../interfaces/beerCartInterfaces';
 import { loginStyles } from '../theme/loginStyles';
 import { stylesSub } from './SubscriptionScreen';
+import { AuthContext } from '../context/AuthContext';
 
 
 interface renderItem {
@@ -19,7 +20,8 @@ export const CartScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const { beerCart } = useContext(BeerCartContext);
+  const { beerCart, createVenta, venta, createDetalleVenta, cleaningBeerWarehouse, obtenerCervezas } = useContext(BeerCartContext);
+  const { user } = useContext(AuthContext);
 
   const formatoChileno = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' });
 
@@ -30,17 +32,39 @@ export const CartScreen = () => {
     setRefreshing(false);
   }
 
+  const iterateDetalleVenta = () => {
+    const { id }:any = venta;
+
+    beerCart.map((beer) => {
+      const detalleVenta = {
+        cerveza: beer.id,
+        precio: beer.cantidad * beer.precioUnit,
+        cantidad: beer.cantidad,
+        venta: id
+      }
+      createDetalleVenta(detalleVenta); 
+    })
+    
+    
+  }
+
   const PayBeer = () => {
-    console.log('hola')
+    iterateDetalleVenta()
+    setIsVisible(!isVisible);
+    cleaningBeerWarehouse();
+    obtenerCervezas();
+
   }
 
 
   const renderItem = ({ item }: renderItem): any => {
     return (
-      <View style={{ flexDirection: 'row', height: 30, marginTop: 5, borderBottomColor: 'rgba(0, 0, 0,0.12)',
-      borderBottomWidth: 1, paddingBottom: 2, padding: 1 }}>
-        <Text style={{ fontSize: 20, marginLeft: 10, backgroundColor: 'rgba(120,120,120,0.1)', color: 'black'}}> {item.cantidad} </Text>
-        <Text style={{ fontSize: 20, color: 'black'}}> {item.nombre} - {item.marca} </Text>
+      <View style={{
+        flexDirection: 'row', height: 30, marginTop: 5, borderBottomColor: 'rgba(0, 0, 0,0.12)',
+        borderBottomWidth: 1, paddingBottom: 2, padding: 1
+      }}>
+        <Text style={{ fontSize: 20, marginLeft: 10, backgroundColor: 'rgba(120,120,120,0.1)', color: 'black' }}> {item.cantidad} </Text>
+        <Text style={{ fontSize: 20, color: 'black' }}> {item.nombre} - {item.marca} </Text>
       </View>
     )
   }
@@ -57,6 +81,15 @@ export const CartScreen = () => {
       (acumulador: any, valor: any) => acumulador + valor);
 
     return totalAcumulado;
+  }
+
+  const btnConfirmar = () => {
+    const total = totalPrice()
+    const id = user!.uid;
+    createVenta(id, total);
+    setIsVisible(!isVisible);
+    setOpenModal(!openModal);
+
   }
 
   return (
@@ -129,8 +162,8 @@ export const CartScreen = () => {
                 renderItem={renderItem}
               />
 
-              <View style={{marginBottom: 30}}>
-                <Text style={{fontSize: 30, fontWeight: 'bold'}}>Total: {formatoChileno.format(totalPrice())}</Text>
+              <View style={{ marginBottom: 30 }}>
+                <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Total: {formatoChileno.format(totalPrice())}</Text>
               </View>
 
             </View>
@@ -140,11 +173,7 @@ export const CartScreen = () => {
             <View style={stylesSub.sectionBtn}>
 
               <Pressable
-                onPress={() => {
-                  setIsVisible(!isVisible);
-                  setOpenModal(!openModal);
-
-                }}
+                onPress={btnConfirmar}
 
                 style={{ ...stylesSub.blackButton, marginBottom: 10, alignSelf: 'center' }}
               >

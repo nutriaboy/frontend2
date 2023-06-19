@@ -1,4 +1,6 @@
 import { Cerveza, beerCart } from "../interfaces/beerCartInterfaces";
+import { DetallesVenta } from "../interfaces/detalleVentaInterfaces";
+import { Venta } from "../interfaces/ventaInterfaces";
 
 
 
@@ -6,6 +8,8 @@ export interface BeerCartState {
     cervezas: Cerveza[] | null,
     beerCart: beerCart[] | [],
     errorMessage: string,
+    venta: Venta | {},
+    detalleVenta: DetallesVenta[] | []
 }
 
 type BeerCartAction =
@@ -15,6 +19,8 @@ type BeerCartAction =
     | { type: 'updateAmountBeer', payload: { idBeer: string, cantidad: number } }
     | { type: 'deleteBeerWarehouse', payload: string }
     | { type: 'cleaningBeerWarehouse'}
+    | { type: 'createVenta', payload: Venta }
+    | { type: 'createDetalleVenta', payload: DetallesVenta }
 
 
 export const beerCartReducer = (state: BeerCartState, action: BeerCartAction): BeerCartState => {
@@ -83,6 +89,18 @@ export const beerCartReducer = (state: BeerCartState, action: BeerCartAction): B
             return { 
                 ...state,
                 beerCart: []
+            }
+
+        case 'createVenta':
+            return {
+                ...state,
+                venta: action.payload
+            }
+
+        case 'createDetalleVenta' :
+            return {
+                ...state,
+                detalleVenta: [...state.detalleVenta, action.payload]
             }
 
         default:

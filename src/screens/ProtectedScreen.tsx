@@ -27,9 +27,12 @@ export const ProtectedScreen = () => {
 
 
   useEffect(() => {
-    obtenerSubById(user!.uid);
     obtenerCervezas();
-  }, [])
+  }, [cervezas])
+
+  useEffect(() => {
+    obtenerSubById(user!.uid);
+  }, []);
 
 
   const handleLogOut = () => {
