@@ -44,19 +44,31 @@ export const ShoppingHistory = ({ navigation }: Props) => {
           Historial de Compra
         </Text>
 
-        <View style={styles.itemContainer}>
-          <FlatList
-            data={ventas}
-            renderItem={renderItem}
-            style={{ width: '100%' }}
-            contentContainerStyle={{
-              alignItems: 'center',
-              width: '100%',
-              paddingBottom: 15,
-            }}
-          />
+        {
+          (ventas.length > 0)
+            ? (
+              <View style={styles.itemContainer}>
+                <FlatList
+                  data={ventas}
+                  renderItem={renderItem}
+                  style={{ width: '100%' }}
+                  contentContainerStyle={{
+                    alignItems: 'center',
+                    width: '100%',
+                    paddingBottom: 15,
+                  }}
+                />
 
-        </View>
+              </View>
+            )
+            : (
+              <View style={{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center',  position: 'absolute'}}>
+                <Icon name={'beer'} color="white" size={200}/>
+              </View>
+            )
+        }
+
+
 
       </View>
     </View>
