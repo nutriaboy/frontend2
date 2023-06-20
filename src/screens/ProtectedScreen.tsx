@@ -16,7 +16,7 @@ export const ProtectedScreen = () => {
 
   const { user, token, logOut } = useContext(AuthContext);
   const { obtenerSubById, isSubscriber } = useContext(SubContext);
-  const { obtenerCervezas, cervezas, cleaningBeerWarehouse } = useContext(BeerCartContext);
+  const { obtenerCervezas, cervezas, cleaningBeerWarehouse, getVentasByUser } = useContext(BeerCartContext);
   const [refreshing, setRefreshing] = useState(false);
 
 
@@ -28,11 +28,14 @@ export const ProtectedScreen = () => {
 
   useEffect(() => {
     obtenerCervezas();
-  }, [cervezas])
-
+  }, [])
+  
   useEffect(() => {
-    obtenerSubById(user!.uid);
-  }, []);
+    if (isOpen) {
+      getVentasByUser(user!.uid);
+      obtenerSubById(user!.uid);
+    }
+  }, [isOpen]);
 
 
   const handleLogOut = () => {

@@ -4,6 +4,7 @@ import { BeerCartState, beerCartReducer } from '../reducers/beerCartReducer';
 import connectionApi from '../api/ConnectionApi';
 import { Venta } from '../interfaces/ventaInterfaces';
 import { DetallesVenta } from '../interfaces/detalleVentaInterfaces';
+import { VentasUsuario } from '../interfaces/ventasByUserInterfaces';
 
 type BeerCartContextProps = {
     cervezas: Cerveza[] | null;
@@ -11,6 +12,7 @@ type BeerCartContextProps = {
     errorMessage: string;
     venta: Venta | {};
     detalleVenta: DetallesVenta[] | [];
+    ventas: VentasUsuario[] | [];
     obtenerCervezas: () => Promise<void>;
     beerWarehouse: (...rest: any) => void;
     updateAmountBeerWarehouse: (cantidad: number, idBeer: string) => void;
@@ -18,6 +20,7 @@ type BeerCartContextProps = {
     cleaningBeerWarehouse: () => void;
     createVenta: (id: string, precio: number) => Promise<void>;
     createDetalleVenta: (...rest: any) => Promise<void>;
+    getVentasByUser: (usuario: string) => Promise<void>;
 
 }
 
@@ -27,6 +30,7 @@ const BeerCartInitialState: BeerCartState = {
     errorMessage: '',
     venta: {},
     detalleVenta: [],
+    ventas: [],
 }
 
 export const BeerCartContext = createContext({} as BeerCartContextProps);
@@ -36,6 +40,7 @@ export const BeerCartProvider = ({ children }: any) => {
     const [stateBeer, dispatch] = useReducer(beerCartReducer, BeerCartInitialState);
 
     const obtenerCervezas = async () => {
+        console.log('distarar')
         const { data } = await connectionApi.get('/cervezas?limite=100');
         if (data.ok) {
             const cervezas = data.cervezas.filter((cerveza: Cerveza) => (cerveza.stock !== 0) ? true : false);
@@ -85,6 +90,18 @@ export const BeerCartProvider = ({ children }: any) => {
         }
     }
 
+    const getVentasByUser = async(usuario: string ) => {
+
+        // console.log(usuario);
+        const {data} = await connectionApi.get(`/ventas/detalle/${usuario}`);
+        
+        if (data.ok){
+            const { ventasUsuarios } = data;
+            // console.log(ventasUsuarios); 
+            dispatch({ type: 'getVentasByUser', payload: ventasUsuarios});    
+        }
+    }
+
     return (
         <BeerCartContext.Provider value={{
             ...stateBeer,
@@ -95,6 +112,7 @@ export const BeerCartProvider = ({ children }: any) => {
             cleaningBeerWarehouse,
             createVenta,
             createDetalleVenta,
+            getVentasByUser,
         }}>
             {children}
         </BeerCartContext.Provider>

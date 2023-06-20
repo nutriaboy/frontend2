@@ -25,7 +25,7 @@ export const StackNav = () => {
             screenOptions={{
                 headerShown: false,
                 gestureEnabled: true,
-                gestureDirection: 'vertical',
+                // gestureDirection: 'vertical',
                 cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid     ,
                 cardStyle: {
                     backgroundColor: 'white'
