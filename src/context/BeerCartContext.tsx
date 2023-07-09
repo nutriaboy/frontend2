@@ -40,7 +40,6 @@ export const BeerCartProvider = ({ children }: any) => {
     const [stateBeer, dispatch] = useReducer(beerCartReducer, BeerCartInitialState);
 
     const obtenerCervezas = async () => {
-        console.log('distarar')
         const { data } = await connectionApi.get('/cervezas?limite=100');
         if (data.ok) {
             const cervezas = data.cervezas.filter((cerveza: Cerveza) => (cerveza.stock !== 0) ? true : false);
@@ -77,7 +76,6 @@ export const BeerCartProvider = ({ children }: any) => {
         const {data} = await connectionApi.post('/ventas', { usuario: id, precioTotal: precio })
         if (data.ok){
             const {venta} = data;
-            // console.log(venta);
             dispatch({ type: 'createVenta', payload: venta});
         }
     }
@@ -92,12 +90,10 @@ export const BeerCartProvider = ({ children }: any) => {
 
     const getVentasByUser = async(usuario: string ) => {
 
-        // console.log(usuario);
         const {data} = await connectionApi.get(`/ventas/detalle/${usuario}`);
         
         if (data.ok){
             const { ventasUsuarios } = data;
-            // console.log(ventasUsuarios); 
             dispatch({ type: 'getVentasByUser', payload: ventasUsuarios});    
         }
     }

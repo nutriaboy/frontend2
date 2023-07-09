@@ -10,6 +10,8 @@ export const Item = ({ data }: any) => {
     const dia = fecha.getDate();
     const mes = fecha.getMonth();
     const year = fecha.getFullYear();
+    // const hora = fecha.getHours();
+    // const minutos = fecha.getMinutes();
     const nombresMeses = [
         "enero", "febrero", "marzo", "abril", "mayo", "junio",
         "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
@@ -19,7 +21,7 @@ export const Item = ({ data }: any) => {
     return (
         <View style={styles.container}>
             <View style={styles.sectionDate}>
-                <Text style={styles.dateInfo} >{dia} de {nombresMeses[mes]} {year}</Text>
+                <Text style={styles.dateInfo} >{dia} de {nombresMeses[mes]} {year} </Text>
             </View>
 
             {/* <View style={styles.transparencia}>

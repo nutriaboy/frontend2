@@ -14,7 +14,6 @@ interface Props extends StackScreenProps<any, any> { };
 export const ShoppingHistory = ({ navigation }: Props) => {
 
   const { ventas } = useContext(BeerCartContext);
-  console.log(ventas)
 
   const renderItem = ({ item }: any) => {
     return (

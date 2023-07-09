@@ -35,7 +35,6 @@ export const Cart = ({ data }: any) => {
     const deleteAmount = () => {
         deleteBeerWarehouse(data.id);
     }
-    // console.log(data);
 
     const formatoChileno = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' });
     return (
