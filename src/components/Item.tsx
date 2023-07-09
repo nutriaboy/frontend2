@@ -77,8 +77,8 @@ export const styles = StyleSheet.create({
         borderBottomColor: 'rgba(0, 0, 0,0.1)',
     },
     sectionInfo: {
-        backgroundColor: 'rgba(250, 0, 50,0.9)',
-        // height: 126,
+        // backgroundColor: 'rgba(250, 0, 50,0.9)',
+        height: 126,
         marginBottom: 7,
         paddingTop: 5,
         paddingLeft: 10,
