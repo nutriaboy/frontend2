@@ -98,9 +98,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.frontend2"
+    namespace "com.pass.cervezarn"
     defaultConfig {
-        applicationId "com.frontend2"
+        applicationId "com.pass.cervezarn"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
