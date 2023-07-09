@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { BeerCartContext } from '../context/BeerCartContext';
 
 
-const uri = 'https://chambriao.cl/wp-content/uploads/2021/08/Cruz-de-Malta-GOLDEN-ALE-1.jpg'
+// const uri = 'https://cdnx.jumpseller.com/dc-central-distribuidora-de-licores/image/15971909/resize/540/540?1646949528'
 
 
 export const Cart = ({ data }: any) => {
@@ -44,7 +44,7 @@ export const Cart = ({ data }: any) => {
             <View style={styles.userInfo}>
                 <Image
                     style={styles.userImg}
-                    source={{ uri }}
+                    source={require('../assets/cerveza.jpg')}
                 />
                 <View style={styles.textSection}>
                     <Text style={styles.userName}>{data.nombre}</Text>
