@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
 
-const uri = 'https://chambriao.cl/wp-content/uploads/2021/08/Cruz-de-Malta-GOLDEN-ALE-1.jpg'
+// const uri = 'https://chambriao.cl/wp-content/uploads/2021/08/Cruz-de-Malta-GOLDEN-ALE-1.jpg'
 
 
 export const Item = ({ data }: any) => {
@@ -10,6 +10,8 @@ export const Item = ({ data }: any) => {
     const dia = fecha.getDate();
     const mes = fecha.getMonth();
     const year = fecha.getFullYear();
+    // const hora = fecha.getHours();
+    // const minutos = fecha.getMinutes();
     const nombresMeses = [
         "enero", "febrero", "marzo", "abril", "mayo", "junio",
         "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
@@ -19,7 +21,7 @@ export const Item = ({ data }: any) => {
     return (
         <View style={styles.container}>
             <View style={styles.sectionDate}>
-                <Text style={styles.dateInfo} >{dia} de {nombresMeses[mes]} {year}</Text>
+                <Text style={styles.dateInfo} >{dia} de {nombresMeses[mes]} {year} </Text>
             </View>
 
             {/* <View style={styles.transparencia}>
@@ -33,7 +35,7 @@ export const Item = ({ data }: any) => {
                         <View style={styles.imgView}>
                             <Image
                                 style={styles.userImg}
-                                source={{ uri }}
+                                source={require('../assets/cerveza.jpg')}
                             />
                         </View>
                         <View style={styles.infoView}>
@@ -75,7 +77,7 @@ export const styles = StyleSheet.create({
         borderBottomColor: 'rgba(0, 0, 0,0.1)',
     },
     sectionInfo: {
-        // backgroundColor: 'rgba(250, 0, 0,0.1)',
+        // backgroundColor: 'rgba(250, 0, 50,0.9)',
         height: 126,
         marginBottom: 7,
         paddingTop: 5,

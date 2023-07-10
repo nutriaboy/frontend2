@@ -1,4 +1,5 @@
-package com.frontend2;
+// package com.frontend2;
+package com.pass.cervezarn;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

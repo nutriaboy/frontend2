@@ -5,7 +5,7 @@ import { View, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Text } from 'react-native-paper';
 
-const uri = 'https://chambriao.cl/wp-content/uploads/2021/08/Cruz-de-Malta-GOLDEN-ALE-1.jpg';
+// const uri = require('../assets/salud.png');
 
 
 export const BeerItem = ({data}: any) => {
@@ -32,7 +32,7 @@ export const BeerItem = ({data}: any) => {
     >
       <Image
         style={styles.beerImg}
-        source={{ uri }}
+        source={ require('../assets/cerveza.jpg') }
       />
       <View style={styles.sectionText}>
         <Text style={styles.beerText}>{formatoChileno.format(data.precioUnit)}</Text>

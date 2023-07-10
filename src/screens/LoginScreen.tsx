@@ -31,7 +31,6 @@ export const LoginScreen = ({navigation}: Props) => {
 
   const onLogin = () => {
     Keyboard.dismiss();
-    // console.log({correo, password});
     singIn({correo, password});
   }
 

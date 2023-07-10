@@ -32,7 +32,6 @@ export const SubscriptionScreen = ({ navigation }: Props) => {
     const PayAndSub = () => {
         const id = user!.uid;
         createSub({ id, telefono, ciudad, direccion, genero });
-        // console.log({telefono, ciudad, direccion, genero})
         setIsVisible(!isVisible);
         navigation.pop()
     }

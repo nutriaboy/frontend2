@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { BeerCartContext } from '../context/BeerCartContext';
 
 
-const uri = 'https://chambriao.cl/wp-content/uploads/2021/08/Cruz-de-Malta-GOLDEN-ALE-1.jpg';
+const uri = 'https://cdnx.jumpseller.com/dc-central-distribuidora-de-licores/image/15971909/resize/540/540?1646949528';
 
 
 export const CervezaScreen = ({ route }: any) => {
@@ -88,7 +88,7 @@ export const CervezaScreen = ({ route }: any) => {
         <View style={styles.card}>
           <Image
             style={styles.beerImg}
-            source={{ uri }}
+            source={require('../assets/cerveza.jpg')}
           />
         </View>
 
