@@ -60,7 +60,7 @@ export const styles = StyleSheet.create({
 
     container: {
         width: '90%',
-        minHeight: 180,//TODO: ver segun items que vengan
+        minHeight: 180,
         margin: 5,
         // padding: 5,
         backgroundColor: 'white',
