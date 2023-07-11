@@ -101,7 +101,7 @@ export const ProtectedScreen = () => {
           onPress={onOpen}
         // onPress={handleSub}
         >
-          <Icon name="menu" size={40} />
+          <Icon name="menu" size={40} color="#767676"/>
           {/* <Text style={styles.textButtonSub}>Suscríbete </Text> */}
         </TouchableOpacity>
 
@@ -114,7 +114,7 @@ export const ProtectedScreen = () => {
         <Actionsheet isOpen={isOpen} onClose={onClose}>
           <Actionsheet.Content>
             <Box w="100%" h={60} px={4} justifyContent="center" >
-              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
+              <Text style={{ fontSize: 20, fontWeight: 'bold', color: "#737373" }}>
               {(user?.genero === 'F') ? "Bienvenida: " : "Bienvenido: "} {user?.nombre} {user?.apellido} 😊
               </Text>
             </Box>

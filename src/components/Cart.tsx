@@ -79,7 +79,7 @@ export const Cart = ({ data }: any) => {
                                     style={styles.buttonsStocking}
                                     onPress={deleteAmount}
                                 >
-                                    <Icon name="trash" size={20} />
+                                    <Icon name="trash" size={20} color="#767676" />
                                 </TouchableOpacity>
                             )
                     }

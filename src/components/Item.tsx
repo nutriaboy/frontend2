@@ -16,43 +16,54 @@ export const Item = ({ data }: any) => {
         "enero", "febrero", "marzo", "abril", "mayo", "junio",
         "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
     ];
-
+    console.log()
 
     return (
-        <View style={styles.container}>
-            <View style={styles.sectionDate}>
-                <Text style={styles.dateInfo} >{dia} de {nombresMeses[mes]} {year} </Text>
-            </View>
+        <>
+            {
+                (data.detalle.length === 0)
+                    ? (null)
+                    : (
+                        <View style={styles.container}>
+                            <View style={styles.sectionDate}>
+                                <Text style={styles.dateInfo} >{dia} de {nombresMeses[mes]} {year} </Text>
+                            </View>
 
-            {/* <View style={styles.transparencia}>
+                            {/* <View style={styles.transparencia}>
         </View> */}
 
 
-            <FlatList
-                data={data.detalle}
-                renderItem={({ item }) => (
-                    <View style={styles.sectionInfo}>
-                        <View style={styles.imgView}>
-                            <Image
-                                style={styles.userImg}
-                                source={require('../assets/cerveza.jpg')}
+                            <FlatList
+                                data={data.detalle}
+                                renderItem={({ item }) => (
+                                    <View style={styles.sectionInfo}>
+                                        <View style={styles.imgView}>
+                                            <Image
+                                                style={styles.userImg}
+                                                source={require('../assets/cerveza.jpg')}
+                                            />
+                                        </View>
+                                        <View style={styles.infoView}>
+                                            <Text style={{ color: "#767676" }}>Cerveza: {item.cerveza.nombre}</Text>
+                                            <Text style={{ color: "#767676" }}>Marca: {item.cerveza.marca}</Text>
+                                            <Text style={{ color: "#767676" }}>Valor: {formatoChileno.format(item.precio)}</Text>
+                                            <Text style={{ color: "#767676" }}>Cantidad: {item.cantidad}</Text>
+
+                                        </View>
+                                    </View>)
+                                }
                             />
-                        </View>
-                        <View style={styles.infoView}>
-                            <Text>Cerveza: {item.cerveza.nombre}</Text>
-                            <Text>Marca: {item.cerveza.marca}</Text>
-                            <Text>Valor: {formatoChileno.format(item.precio)}</Text>
-                            <Text>Cantidad: {item.cantidad}</Text>
+
+
+
 
                         </View>
-                    </View>)
-                }
-            />
+                    )
+
+            }
+        </>
 
 
-
-
-        </View>
     )
 }
 
@@ -105,6 +116,7 @@ export const styles = StyleSheet.create({
         padding: 10,
     },
     dateInfo: {
+        color: "#767676",
         fontSize: 18,
         fontWeight: 'bold',
     },
