@@ -16,8 +16,8 @@ export const Item = ({ data }: any) => {
         "enero", "febrero", "marzo", "abril", "mayo", "junio",
         "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
     ];
-    console.log()
 
+    
     return (
         <>
             {
