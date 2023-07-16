@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { View, Text, StyleSheet, FlatList, RefreshControl, TouchableOpacity, Modal, Pressable } from 'react-native';
+import { View, Text, StyleSheet, FlatList, RefreshControl, TouchableOpacity, Modal, Pressable, Alert } from 'react-native';
 import { Cart } from '../components/Cart'
 import { BeerCartContext } from '../context/BeerCartContext';
 
@@ -53,7 +53,10 @@ export const CartScreen = () => {
     setIsVisible(!isVisible);
     cleaningBeerWarehouse();
     obtenerCervezas();
-
+    
+    Alert.alert('¡Gracias por tu compra!', 'Hemos recibido tu pedido y estamos procesándolo 😀', [{
+      text: 'OK',
+    }] );
   }
 
 

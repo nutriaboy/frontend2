@@ -108,7 +108,7 @@ export const FormRegister = () => {
                 onChangeText={(value) => onChange(value, 'correo')}
                 value={correo}
                 // onSubmitEditing={ onRegister }
-                autoCapitalize='words'
+                autoCapitalize='none'
                 autoCorrect={false}
             />
 
